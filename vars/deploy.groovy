@@ -1,8 +1,7 @@
 def call() {
     echo "Start Deploy"
 
-    stage('Staging Deployment') {
-      steps {
+    script {
         withCredentials([string(credentialsId: 'K8S_CI_TOKEN', variable: 'K8S_CI_TOKEN')]) {
             sh '''
                 docker run \
@@ -32,5 +31,4 @@ def call() {
                 '''
             }
         }
-    }
 }
