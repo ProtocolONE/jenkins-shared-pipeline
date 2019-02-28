@@ -1,4 +1,17 @@
-def call() {
+def call(project,registry) {
+
+  pipeline {
+    options {
+        buildDiscarder(logRotator(numToKeepStr:'10'))
+        timeout(time: 10, unit: 'MINUTES')
+        }
+
+    environment {
+        CI_REGISTRY_IMAGE = 'p1hub/${registry}'
+        P1_PROJECT = '${project}'
+    }
+
+    agent any
     stages {
         stage('Build') {
             steps {
@@ -32,4 +45,14 @@ def call() {
         }
     }
 
+    post {
+        success {
+            slackSend (color: '#00FF00', message: "SUCCESSFUL: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+        }
+        
+        failure {
+            slackSend (color: '#FF0000', message: "FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+        }
+    }
+  }
 }
