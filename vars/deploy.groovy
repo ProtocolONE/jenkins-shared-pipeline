@@ -24,6 +24,7 @@ def call() {
                 --set backend.imageTag=$BUILD_ID \
                 --set frontend.image=$NGX_IMAGE \
                 --set frontend.imageTag="$BUILD_ID"-static \
+                --debug \
                 --wait \
                 --dry-run \
                 --timeout 180 ||
