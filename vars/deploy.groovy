@@ -4,6 +4,7 @@ def call() {
     script {
         withCredentials([string(credentialsId: 'K8S_CI_TOKEN', variable: 'K8S_CI_TOKEN')]) {
             sh '''
+                echo $P1_PROJECT && echo $CI_REGISTRY_IMAGE && echo $BUILD_ID &&
                 docker run \
                 --rm \
                 -v $PWD/.helm:/.helm \
