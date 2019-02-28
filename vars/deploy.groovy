@@ -4,7 +4,6 @@ def call() {
     script {
         withCredentials([string(credentialsId: 'K8S_CI_TOKEN', variable: 'K8S_CI_TOKEN')]) {
             sh '''
-                echo $P1_PROJECT && echo $CI_REGISTRY_IMAGE && echo $BUILD_ID &&
                 docker run \
                 --rm \
                 -v $PWD/.helm:/.helm \
@@ -12,6 +11,7 @@ def call() {
                 -e "K8S_CI_TOKEN=$K8S_CI_TOKEN" \
                 -e "P1_PROJECT=$P1_PROJECT" \
                 -e "CI_REGISTRY_IMAGE=$CI_REGISTRY_IMAGE" \
+                -e "BUILD_ID=$BUILD_ID" \
                 -e NGX_IMAGE=`if [ -f Dockerfile.nginx ]; then echo $CI_REGISTRY_IMAGE ; else echo nginx; fi` \
                 p1hub/kubernetes-helm:2.11.0 \
                 /bin/sh -c \
