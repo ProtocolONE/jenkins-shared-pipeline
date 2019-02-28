@@ -7,8 +7,8 @@ def call(project,registry) {
         }
 
     environment {
-        CI_REGISTRY_IMAGE = 'p1hub/'${registry}
-        P1_PROJECT = ${project}
+        CI_REGISTRY_IMAGE = "p1hub/${registry}"
+        P1_PROJECT = "${project}"
     }
 
     agent any
