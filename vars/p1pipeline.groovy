@@ -21,7 +21,7 @@ def call(project,registry) {
             }
         }
 
-        stage('Run Tests') {
+/*        stage('Run Tests') {
             parallel {
                 stage('Test 1') {
                     steps {
@@ -35,7 +35,7 @@ def call(project,registry) {
                 }
             }
         }
-
+*/
         stage('Staging Deployment') {
             steps {
                 script {
