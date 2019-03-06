@@ -16,7 +16,7 @@ def call(project,registry) {
         stage('Build') {
             steps {
                 script {
-                    build()
+                    p1build()
                 }
             }
         }
@@ -39,7 +39,7 @@ def call(project,registry) {
         stage('Staging Deployment') {
             steps {
                 script {
-                    deploy()
+                    p1deploy()
                 }
             }
         }
