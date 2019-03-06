@@ -26,8 +26,7 @@ def call() {
                 --set frontend.image=$NGX_IMAGE \
                 --set frontend.imageTag="$BUILD_ID"-static \
                 --debug \
-                --wait \
-                --dry-run \
+                --wait 
                 --timeout 180 ||
                 (helm history --max 2 $P1_PROJECT | head -n 2 | tail -n 1 | awk "{print \$1}" | xargs helm rollback $P1_PROJECT && exit 1)'
                 '''
