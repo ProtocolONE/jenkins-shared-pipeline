@@ -3,7 +3,7 @@ def call(project,registry) {
   pipeline {
     options {
         buildDiscarder(logRotator(numToKeepStr:'10'))
-        timeout(time: 10, unit: 'MINUTES')
+        timeout(time: 20, unit: 'MINUTES')
         }
 
     environment {
