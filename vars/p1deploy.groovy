@@ -3,7 +3,7 @@ def call() {
 
     script {
         withCredentials([string(credentialsId: 'K8S_CI_TOKEN', variable: 'K8S_CI_TOKEN')]) {
-            if(${param.PROD_RELEASE}){
+            if(${params.PROD_RELEASE}){
                 sh ''' echo "production release"'''              
             }
             else{
