@@ -13,6 +13,10 @@ def call(project,registry) {
     }
 
     agent any
+
+    parameters {
+        booleanParam(name: 'PROD_RELEASE', defaultValue: false, description: 'Release to production')
+    }    
     stages {
         stage('Build') {
             steps {

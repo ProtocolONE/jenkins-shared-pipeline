@@ -3,6 +3,12 @@ def call() {
 
     script {
         withCredentials([string(credentialsId: 'K8S_CI_TOKEN', variable: 'K8S_CI_TOKEN')]) {
+            if(${param.PROD_RELEASE}){
+                sh ''' echo "production release"'''              
+            }
+            else{
+                sh ''' echo "test release"'''
+            }
             sh '''
                 docker run \
                 --rm \
