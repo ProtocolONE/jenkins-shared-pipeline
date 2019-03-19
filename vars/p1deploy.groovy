@@ -12,7 +12,7 @@ def call(devBranch = "", devNameSpace = "",ingressPrefix="dev-") {
             k8sNameSpace="default"
             k8sIngressPrefix=""
 
-            if(devBranch!="" and devBranch==env.BRANCH_NAME){
+            if(devBranch!="" && devBranch==env.BRANCH_NAME){
                 k8sNameSpace=devNameSpace
                 k8sIngressPrefix=ingressPrefix
             }
