@@ -1,4 +1,4 @@
-def call(project,registry) {
+def call(project, registry, devBranch = "", devNameSpace = "",ingressPrefix="dev-") {
 
   pipeline {
     options {
@@ -44,7 +44,7 @@ def call(project,registry) {
         stage('Staging Deployment') {
             steps {
                 script {
-                    p1deploy()
+                    p1deploy(devBranch, devNameSpace, ingressPrefix)
                 }
             }
         }

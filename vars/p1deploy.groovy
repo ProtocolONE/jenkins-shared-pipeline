@@ -1,4 +1,4 @@
-def call() {
+def call(devBranch = "", devNameSpace = "",ingressPrefix="dev-") {
     echo "Start Deploy"
 
     script {
@@ -7,6 +7,14 @@ def call() {
                 sh ''' echo "production release"'''              
             } else {
                 sh ''' echo "test release"'''
+            }
+            
+            k8sNameSpace="default"
+            k8sIngressPrefix=""
+
+            if(devBranch!="" and devBranch==env.BRANCH_NAME){
+                k8sNameSpace=devNameSpace
+                k8sIngressPrefix=ingressPrefix
             }
             sh '''
                 docker run \
@@ -26,6 +34,8 @@ def call() {
                 kubectl config use-context ci &&
                 helm init --client-only &&
                 helm upgrade --install $P1_PROJECT .helm \
+                --namespace=${k8sNameSpace}
+                --set ingress.hostnamePrefix=${k8sIngressPrefix}
                 --set backend.image=$CI_REGISTRY_IMAGE \
                 --set backend.imageTag=$BUILD_ID \
                 --set frontend.image=$NGX_IMAGE \
