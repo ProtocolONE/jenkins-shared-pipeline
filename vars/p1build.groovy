@@ -8,10 +8,10 @@ def call() {
                         sh ''' echo "test release"'''
                     }
                     checkout scm
-                        sh '''
-                        docker build -t $CI_REGISTRY_IMAGE:$BUILD_ID .
-                        (if [ -f Dockerfile.nginx ]; then docker build -t $CI_REGISTRY_IMAGE:"$BUILD_ID"-static -f Dockerfile.nginx . ; else echo "Project without static content"; fi);
-                        '''
+                    sh '''
+                    docker build -t $CI_REGISTRY_IMAGE:$BRANCH_NAME-$BUILD_ID .
+                    (if [ -f Dockerfile.nginx ]; then docker build -t $CI_REGISTRY_IMAGE:$BRANCH_NAME-$BUILD_ID-static -f Dockerfile.nginx . ; else echo "Project without static content"; fi);
+                    '''
                 }
     echo "Pushing image"
         script {
@@ -19,8 +19,8 @@ def call() {
                     usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD']]) {
                     sh '''
                         docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-                        docker push $CI_REGISTRY_IMAGE:$BUILD_ID
-                        (if [ -f Dockerfile.nginx ]; then docker push $CI_REGISTRY_IMAGE:"$BUILD_ID"-static ; else echo "Project without static content"; fi);
+                        docker push $CI_REGISTRY_IMAGE:$BRANCH_NAME-$BUILD_ID
+                        (if [ -f Dockerfile.nginx ]; then docker push $CI_REGISTRY_IMAGE:$BRANCH_NAME-$BUILD_ID-static ; else echo "Project without static content"; fi);
                     '''
                     }
                 }
