@@ -25,7 +25,7 @@ def call(devBranch = "", devNameSpace = "",ingressPrefix="dev-") {
             sh """
                 docker run \
                 --rm \
-                -v $PWD/.helm:/.helm \
+                -v \$PWD/.helm:/.helm \
                 -e "K8S_API_URL=\$K8S_API_URL" \
                 -e "K8S_CI_TOKEN=\$K8S_CI_TOKEN" \
                 -e "P1_PROJECT=\$P1_PROJECT" \
