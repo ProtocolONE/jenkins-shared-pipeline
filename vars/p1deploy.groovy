@@ -34,8 +34,8 @@ def call(devBranch = "", devNameSpace = "",ingressPrefix="dev-") {
                 kubectl config use-context ci &&
                 helm init --client-only &&
                 helm upgrade --install $P1_PROJECT .helm \
-                --namespace=${k8sNameSpace}
-                --set ingress.hostnamePrefix=${k8sIngressPrefix}
+                --namespace=${k8sNameSpace} \
+                --set ingress.hostnamePrefix=${k8sIngressPrefix} \
                 --set backend.image=$CI_REGISTRY_IMAGE \
                 --set backend.imageTag=$BUILD_ID \
                 --set frontend.image=$NGX_IMAGE \
