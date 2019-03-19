@@ -9,6 +9,7 @@ def call(devBranch = "", devNameSpace = "",ingressPrefix="dev-") {
                 sh ''' echo "test release"'''
             }
             
+            helmRelease = env.P1_PROJECT
             k8sNameSpace="default"
             k8sIngressPrefix=""
 
@@ -18,10 +19,10 @@ def call(devBranch = "", devNameSpace = "",ingressPrefix="dev-") {
                 k8sNameSpace=devNameSpace
                 k8sIngressPrefix=ingressPrefix
                 helmDebug="--debug --dry-run"
-                env.P1_PROJECT="${env.P1_PROJECT}-${env.BRANCH_NAME}"
+                helmRelease="${env.P1_PROJECT}-${env.BRANCH_NAME}"
 
             }
-            sh "echo branch: ${env.BRANCH_NAME} helm release: ${env.P1_PROJECT}"
+            sh "echo branch: ${env.BRANCH_NAME} helm release: ${helmRelease}"
 
 
             sh """
@@ -42,7 +43,7 @@ def call(devBranch = "", devNameSpace = "",ingressPrefix="dev-") {
                 kubectl config set-context ci --cluster=k8s --user=ci &&
                 kubectl config use-context ci &&
                 helm init --client-only &&
-                helm upgrade --install \$P1_PROJECT .helm \
+                helm upgrade --install ${helmRelease} .helm \
                 ${helmDebug} \
                 --namespace=${k8sNameSpace} \
                 --set ingress.hostnamePrefix=${k8sIngressPrefix} \
