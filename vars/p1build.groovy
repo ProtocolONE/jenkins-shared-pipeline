@@ -2,6 +2,11 @@ def call() {
     echo "Start building image"
 
         script {
+                    if(params.PROD_RELEASE){
+                        sh ''' echo "production release"'''              
+                    } else {
+                        sh ''' echo "test release"'''
+                    }
                     checkout scm
                         sh '''
                         docker build -t $CI_REGISTRY_IMAGE:$BUILD_ID .
