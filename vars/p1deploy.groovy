@@ -18,9 +18,8 @@ def call(devBranch = "", devNameSpace = "",ingressPrefix="dev-") {
             if(devBranch!="" && devBranch==env.BRANCH_NAME){
                 k8sNameSpace=devNameSpace
                 k8sIngressPrefix=ingressPrefix
-                helmDebug="--debug --dry-run"
                 helmRelease="${env.P1_PROJECT}-${env.BRANCH_NAME}"
-
+                //helmDebug="--debug --dry-run"
             }
             sh "echo branch: ${env.BRANCH_NAME} helm release: ${helmRelease}"
 
