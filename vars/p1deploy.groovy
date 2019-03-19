@@ -12,16 +12,18 @@ def call(devBranch = "", devNameSpace = "",ingressPrefix="dev-") {
             k8sNameSpace="default"
             k8sIngressPrefix=""
 
-            sh "echo ${env.BRANCH_NAME}"
-
             helmDebug="--debug"
 
             if(devBranch!="" && devBranch==env.BRANCH_NAME){
                 k8sNameSpace=devNameSpace
                 k8sIngressPrefix=ingressPrefix
                 helmDebug="--debug --dry-run"
+                env.P1_PROJECT="${env.P1_PROJECT}-${env.BRANCH_NAME}"
 
             }
+            sh "echo branch: ${env.BRANCH_NAME} helm release: ${env.P1_PROJECT}"
+
+
             sh """
                 docker run \
                 --rm \
