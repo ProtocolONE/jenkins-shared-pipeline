@@ -14,9 +14,12 @@ def call(devBranch = "", devNameSpace = "",ingressPrefix="dev-") {
 
             sh "echo "${env.BRANCH_NAME}"
 
+            helmDebug="--debug"
+
             if(devBranch!="" && devBranch==env.BRANCH_NAME){
                 k8sNameSpace=devNameSpace
                 k8sIngressPrefix=ingressPrefix
+                helmDebug="--debug --dry-run"
 
             }
             sh """
@@ -37,6 +40,7 @@ def call(devBranch = "", devNameSpace = "",ingressPrefix="dev-") {
                 kubectl config use-context ci &&
                 helm init --client-only &&
                 helm upgrade --install $P1_PROJECT .helm \
+                ${helmDebug} \
                 --namespace=${k8sNameSpace} \
                 --set ingress.hostnamePrefix=${k8sIngressPrefix} \
                 --set backend.image=$CI_REGISTRY_IMAGE \
