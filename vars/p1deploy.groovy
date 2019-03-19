@@ -12,7 +12,7 @@ def call(devBranch = "", devNameSpace = "",ingressPrefix="dev-") {
             k8sNameSpace="default"
             k8sIngressPrefix=""
 
-            sh "echo "${env.BRANCH_NAME}"
+            sh "echo ${env.BRANCH_NAME}"
 
             helmDebug="--debug"
 
