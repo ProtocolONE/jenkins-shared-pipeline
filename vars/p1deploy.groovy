@@ -12,11 +12,14 @@ def call(devBranch = "", devNameSpace = "",ingressPrefix="dev-") {
             k8sNameSpace="default"
             k8sIngressPrefix=""
 
+            sh "echo "${env.BRANCH_NAME}"
+
             if(devBranch!="" && devBranch==env.BRANCH_NAME){
                 k8sNameSpace=devNameSpace
                 k8sIngressPrefix=ingressPrefix
+
             }
-            sh '''
+            sh """
                 docker run \
                 --rm \
                 -v $PWD/.helm:/.helm \
@@ -42,8 +45,8 @@ def call(devBranch = "", devNameSpace = "",ingressPrefix="dev-") {
                 --set frontend.imageTag="$BUILD_ID"-static \
                 --wait \
                 --timeout 180 ||
-                (helm history --max 2 $P1_PROJECT | head -n 2 | tail -n 1 | awk "{print \\$1}" | xargs helm rollback $P1_PROJECT && exit 1)'
-                '''
+                (helm history --max 2 $P1_PROJECT | head -n 2 | tail -n 1 | cut -f 1 | xargs helm rollback $P1_PROJECT && exit 1)'
+                """
             }
         }
 }
