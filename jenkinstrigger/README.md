@@ -1,4 +1,4 @@
-# python-based docker image for remote triggering Jenkins build and reporting build status using Jenkin's API
+# python-based docker image for remote triggering Jenkins build and reporting build status using Jenkins API
 # 
 
 Build and push:
