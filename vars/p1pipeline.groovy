@@ -25,8 +25,16 @@ def call(project, registry, devBranch = "", devNameSpace = "",ingressPrefix="dev
                 }
             }
         }
-
-/*        stage('Run Tests') {
+ 
+        stage('SecScan') {
+            steps {
+                script {
+                    p1secscan()
+                }
+            }
+        }
+/*
+        stage('Run Tests') {
             parallel {
                 stage('Test 1') {
                     steps {
