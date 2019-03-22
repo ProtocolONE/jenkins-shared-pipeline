@@ -1,5 +1,6 @@
 #!/usr/bin/python
-
+# based on the solution from https://stackoverflow.com/questions/28311030/check-jenkins-job-status-after-triggering-a-build-remotely
+#
 # USAGE: docker run -it -e JENKINS_AUTH_TOKEN='user:token' \
 # docker run -it -e JENKINS_AUTH_TOKEN='user:token' \
 #     -e JENKINS_BUILD_TOKEN='trigger_token' \
