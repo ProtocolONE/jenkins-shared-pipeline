@@ -16,43 +16,39 @@ def call(project, registry, devBranch = "", devNameSpace = "",ingressPrefix="dev
 
     parameters {
         booleanParam(name: 'PROD_RELEASE', defaultValue: false, description: 'Release to production')
+        booleanParam(name: 'ROLLBACK', defaultValue: false, description: 'Rollback project?')
     }    
     stages {
-        stage('Build') {
-            steps {
-                script {
-                    p1build()
-                }
-            }
-        }
- 
-        stage('SecScan') {
-            steps {
-                script {
-                    p1secscan()
-                }
-            }
-        }
-/*
-        stage('Run Tests') {
-            parallel {
-                stage('Test 1') {
-                    steps {
-                        sh "sleep 5"
-                    }
-                }
-                stage('Test 2') {
-                    steps {
-                        sh "sleep 5"
+        if(params.ROLLBACK){
+            stage('Rollback') {
+                steps {
+                    script {
+                        p1rollback()
                     }
                 }
             }
-        }
-*/
-        stage('Staging Deployment') {
-            steps {
-                script {
-                    p1deploy(devBranch, devNameSpace, ingressPrefix)
+        } else {
+            stage('Build') {
+                steps {
+                    script {
+                        p1build()
+                    }
+                }
+            }
+    
+            stage('SecScan') {
+                steps {
+                    script {
+                        p1secscan()
+                    }
+                }
+            }
+
+            stage('Staging Deployment') {
+                steps {
+                    script {
+                        p1deploy(devBranch, devNameSpace, ingressPrefix)
+                    }
                 }
             }
         }
