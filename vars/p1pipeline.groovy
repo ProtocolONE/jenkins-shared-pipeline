@@ -19,7 +19,7 @@ def call(project, registry, devBranch = "", devNameSpace = "",ingressPrefix="dev
         booleanParam(name: 'ROLLBACK', defaultValue: false, description: 'Rollback project?')
     }    
     stages {
-        if(params.ROLLBACK){
+/*        if(params.ROLLBACK){ 
             stage('Rollback') {
                 steps {
                     script {
@@ -27,7 +27,7 @@ def call(project, registry, devBranch = "", devNameSpace = "",ingressPrefix="dev
                     }
                 }
             }
-        } else {
+        } else {*/
             stage('Build') {
                 steps {
                     script {
@@ -51,7 +51,7 @@ def call(project, registry, devBranch = "", devNameSpace = "",ingressPrefix="dev
                     }
                 }
             }
-        }
+        /*} */
     }
 
     post {
