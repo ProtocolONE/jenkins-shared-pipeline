@@ -18,7 +18,7 @@ def call() {
                         ],
                     ]
                 
-                def selectedRev = sh (returnStdout: true, script: "echo ${selectRev} | cut -d ' ' -f 1")
+                def selectedRev = sh (returnStdout: true, script: "echo ${selectRev} | cut -d ' ' -f 1 | cut -d'\n' -f1")
                 
                 echo "You selected revision number: ${selectedRev}"
                 
