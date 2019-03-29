@@ -19,16 +19,21 @@ def call(project, registry, devBranch = "", devNameSpace = "",ingressPrefix="dev
         booleanParam(name: 'ROLLBACK', defaultValue: false, description: 'Rollback project?')
     }    
     stages {
-/*        if(params.ROLLBACK){ 
             stage('Rollback') {
+                when {
+                    expression {params.ROLLBACK == true}
+                }
                 steps {
                     script {
                         p1rollback()
                     }
                 }
             }
-        } else {*/
+
             stage('Build') {
+                when {
+                    expression {params.ROLLBACK == false}
+                }
                 steps {
                     script {
                         p1build()
@@ -37,6 +42,9 @@ def call(project, registry, devBranch = "", devNameSpace = "",ingressPrefix="dev
             }
     
             stage('SecScan') {
+                when {
+                    expression {params.ROLLBACK == false}
+                }
                 steps {
                     script {
                         p1secscan()
@@ -45,13 +53,15 @@ def call(project, registry, devBranch = "", devNameSpace = "",ingressPrefix="dev
             }
 
             stage('Staging Deployment') {
+                when {
+                    expression {params.ROLLBACK == false}
+                }
                 steps {
                     script {
                         p1deploy(devBranch, devNameSpace, ingressPrefix)
                     }
                 }
             }
-        /*} */
     }
 
     post {
