@@ -24,7 +24,7 @@ def call() {
                 
                 def rollback = sh (
                     returnStdout: true,
-                    script: "docker run --rm p1hub/kubernetes-helm:2.11.0 /bin/sh -c 'kubectl config set-cluster k8s --insecure-skip-tls-verify=true --server=${K8S_API_URL} && kubectl config set-credentals ci --token=${K8S_CI_TOKEN} &&	kubectl config set-context ci --cluster=k8s --user=ci && kubectl config use-context ci && helm init --client-only && helm rollback ${helmRelease} ${selectedRev}" 
+                    script: "docker run --rm p1hub/kubernetes-helm:2.11.0 /bin/sh -c 'kubectl config set-cluster k8s --insecure-skip-tls-verify=true --server=${K8S_API_URL} && kubectl config set-credentals ci --token=${K8S_CI_TOKEN} &&	kubectl config set-context ci --cluster=k8s --user=ci && kubectl config use-context ci && helm init --client-only && helm rollback ${helmRelease} ${selectedRev}'" 
                 )
             }
     }
