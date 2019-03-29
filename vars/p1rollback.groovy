@@ -1,7 +1,12 @@
 def call() {
 
     script {
+            def getBuildUser() {
+                return currentBuild.rawBuild.getCause(Cause.UserIdCause).getUserId()
+            }
+
             helmRelease = env.P1_PROJECT
+            BUILD_USER = getBuildUser()
             withCredentials([string(credentialsId: 'K8S_CI_TOKEN', variable: 'K8S_CI_TOKEN')]) {
                 def Rev = sh (
                     returnStdout: true,
@@ -27,5 +32,7 @@ def call() {
 					script: "docker run --rm p1hub/kubernetes-helm:2.11.0 /bin/sh -c 'kubectl config set-cluster k8s --insecure-skip-tls-verify=true --server=${K8S_API_URL} && kubectl config set-credentials ci --token=${K8S_CI_TOKEN} &&	kubectl config set-context ci --cluster=k8s --user=ci && kubectl config use-context ci && helm init --client-only && helm rollback ${helmRelease} ${selectedRev}'"
                 )
             }
+
+            slackSend (color: '#FFFE89', message: "ROLLBACK: Job '${env.JOB_NAME}' (${env.BUILD_URL}) by ${BUILD_USER}\n")
     }
 }
