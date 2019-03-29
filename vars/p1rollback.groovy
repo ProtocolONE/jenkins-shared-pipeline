@@ -1,10 +1,9 @@
+def getBuildUser() {
+    return currentBuild.rawBuild.getCause(Cause.UserIdCause).getUserId()
+}
+
 def call() {
-
     script {
-            def getBuildUser() {
-                return currentBuild.rawBuild.getCause(Cause.UserIdCause).getUserId()
-            }
-
             helmRelease = env.P1_PROJECT
             BUILD_USER = getBuildUser()
             withCredentials([string(credentialsId: 'K8S_CI_TOKEN', variable: 'K8S_CI_TOKEN')]) {
