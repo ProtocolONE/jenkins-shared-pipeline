@@ -59,8 +59,8 @@ while True:
     if (elasped_time % (QUEUE_POLL_INTERVAL * 10)) == 0:
         print("{}: Job {} not started yet from queue id {}".format(time.ctime(), job_name, queue_id))
 
-print('{}: Job started'.format(time.ctime()))
-		
+print("{}: Job started: https://{}/job/{}/{}/console".format(time.ctime(),jenkins_uri, job_name, job_id))
+
 # poll job status waiting for a result
 #
 job_url = 'https://{}@{}/job/{}/{}/api/json'.format(auth_token, jenkins_uri, job_name, job_id)
