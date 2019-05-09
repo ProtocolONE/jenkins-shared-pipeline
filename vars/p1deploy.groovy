@@ -25,6 +25,7 @@ def call(devBranch = "", devNameSpace = "",ingressPrefix="dev-") {
 
 
             sh """
+                export NGX_IMAGE=`if [ -f Dockerfile.nginx ]; then echo \$CI_REGISTRY_IMAGE ; else echo nginx; fi`
                 docker run \
                 --rm \
                 -v \$PWD/.helm:/.helm \
@@ -48,7 +49,7 @@ def call(devBranch = "", devNameSpace = "",ingressPrefix="dev-") {
                 --set ingress.hostnamePrefix=${k8sIngressPrefix} \
                 --set backend.image=${env.CI_REGISTRY_IMAGE} \
                 --set backend.imageTag=${env.BRANCH_NAME}-${env.BUILD_ID} \
-                --set frontend.image=\$NGX_IMAGE \
+                --set frontend.image=${env.NGX_IMAGE} \
                 --set frontend.imageTag=${env.BRANCH_NAME}-${env.BUILD_ID}-static \
                 --wait \
                 --timeout 180 ||
