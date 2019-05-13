@@ -45,10 +45,11 @@ job_info_url = 'https://{}@{}/queue/item/{}/api/json'.format(auth_token, jenkins
 elasped_time = 0 
 print('{} Job {} added to queue'.format(time.ctime(), job_name))
 while True:
-    l = requests.get(job_info_url)
-    jqe = l.json()
-    task = jqe['task']['name']
+    print("{}: trying to get job id...".format(time.ctime()))
     try:
+        l = requests.get(job_info_url,timeout=5)
+        jqe = l.json()
+        task = jqe['task']['name']
         job_id = jqe['executable']['number']
         break
     except:
@@ -66,9 +67,14 @@ print("{}: Job started: https://{}/job/{}/{}/console".format(time.ctime(),jenkin
 job_url = 'https://{}@{}/job/{}/{}/api/json'.format(auth_token, jenkins_uri, job_name, job_id)
 start_epoch = int(time.time())
 while True:
-    j = requests.get(job_url)
-    jje = j.json()
-    result = jje['result']
+    print("{}: trying to get job status...".format(time.ctime()))
+    result = ''
+    try:
+        j = requests.get(job_url,timeout=5)
+        jje = j.json()
+        result = jje['result']
+    except:
+        print("request timeout")    
     if result == 'SUCCESS':
         # Do success steps
         print("{}: Job: {} Status: {}".format(time.ctime(), job_name, result))
@@ -83,7 +89,7 @@ while True:
         sys.exit(1)
     else:
         print("{}: Job: {} Status: {}. Polling again in {} secs".format(time.ctime(), job_name, result, JOB_POLL_INTERVAL))
-
+    
     cur_epoch = int(time.time())
     if (cur_epoch - start_epoch) > OVERALL_TIMEOUT:
         print("No status before timeout of {} secs".format(OVERALL_TIMEOUT))
