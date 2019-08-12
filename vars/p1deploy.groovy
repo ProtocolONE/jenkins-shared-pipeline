@@ -8,13 +8,13 @@ def call(devBranch = "", devNameSpace = "",ingressPrefix="dev-") {
             } else {
                 sh ''' echo "test release"'''
             }
-            devBranch=devBranch.replaceAll("/","-")
+            devBranch=devBranch.replaceAll("/","-").toLowerCase()
             
             helmRelease = env.P1_PROJECT
             k8sNameSpace="default"
             k8sIngressPrefix=""
             BR_NAME=env.BRANCH_NAME
-            BR_NAME=BR_NAME.replaceAll("/","-")
+            BR_NAME=BR_NAME.replaceAll("/","-").toLowerCase()
             helmDebug="--debug"
 
             if(devBranch!="" && devBranch==BR_NAME){
