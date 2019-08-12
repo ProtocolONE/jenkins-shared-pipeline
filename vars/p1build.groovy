@@ -1,8 +1,7 @@
 def call() {
     echo "Start building image"
 
-        BR_NAME=env.BRANCH_NAME
-        BR_NAME=BR_NAME.replaceAll("/","_")
+
     
         script {
                     if(params.PROD_RELEASE){
@@ -11,6 +10,8 @@ def call() {
                         sh ''' echo "test release"'''
                     }
                     checkout scm
+                    BR_NAME=env.BRANCH_NAME
+                    BR_NAME=BR_NAME.replaceAll("/","_")
                     sh '''
                     docker build -t $CI_REGISTRY_IMAGE:${BR_NAME}-$BUILD_ID .
                     (if [ -f Dockerfile.nginx ]; then docker build -t $CI_REGISTRY_IMAGE:${BR_NAME}-$BUILD_ID-static -f Dockerfile.nginx . ; else echo "Project without static content"; fi);
@@ -18,7 +19,8 @@ def call() {
                 }
     echo "Pushing image"
         script {
-
+                    BR_NAME=env.BRANCH_NAME
+                    BR_NAME=BR_NAME.replaceAll("/","_")
                     withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'p1docker',
                     usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD']]) {
                     sh '''
