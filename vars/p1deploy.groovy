@@ -8,20 +8,23 @@ def call(devBranch = "", devNameSpace = "",ingressPrefix="dev-") {
             } else {
                 sh ''' echo "test release"'''
             }
+            devBranch=devBranch.replaceAll("/","_")
             
             helmRelease = env.P1_PROJECT
             k8sNameSpace="default"
             k8sIngressPrefix=""
-
+            BR_NAME=env.BRANCH_NAME
+            BR_NAME=BR_NAME.replaceAll("/","_")
             helmDebug="--debug"
 
-            if(devBranch!="" && devBranch==env.BRANCH_NAME){
+            if(devBranch!="" && devBranch==BR_NAME){
                 k8sNameSpace=devNameSpace
                 k8sIngressPrefix=ingressPrefix
-                helmRelease="${env.P1_PROJECT}-${env.BRANCH_NAME}"
+                
+                helmRelease="${env.P1_PROJECT}-${BR_NAME}"
                 //helmDebug="--debug --dry-run"
             }
-            sh "echo branch: ${env.BRANCH_NAME} helm release: ${helmRelease}"
+            sh "echo branch: ${BR_NAME} helm release: ${helmRelease}"
 
 
             sh """
@@ -34,7 +37,6 @@ def call(devBranch = "", devNameSpace = "",ingressPrefix="dev-") {
                 -e "P1_PROJECT=\$P1_PROJECT" \
                 -e "CI_REGISTRY_IMAGE=\$CI_REGISTRY_IMAGE" \
                 -e "BUILD_ID=\$BUILD_ID" \
-                -e "BRANCH_NAME=\$BRANCH_NAME" \
                 -e NGX_IMAGE=`if [ -f Dockerfile.nginx ]; then echo \$CI_REGISTRY_IMAGE ; else echo nginx; fi` \
                 p1hub/kubernetes-helm:2.11.0 \
                 /bin/sh -c \
@@ -48,9 +50,9 @@ def call(devBranch = "", devNameSpace = "",ingressPrefix="dev-") {
                 --namespace=${k8sNameSpace} \
                 --set ingress.hostnamePrefix=${k8sIngressPrefix} \
                 --set backend.image=${env.CI_REGISTRY_IMAGE} \
-                --set backend.imageTag=${env.BRANCH_NAME}-${env.BUILD_ID} \
+                --set backend.imageTag=${BR_NAME}-${env.BUILD_ID} \
                 --set frontend.image=\$NGX_IMAGE \
-                --set frontend.imageTag=${env.BRANCH_NAME}-${env.BUILD_ID}-static \
+                --set frontend.imageTag=${BR_NAME}-${env.BUILD_ID}-static \
                 --wait \
                 --timeout 180 ||
                 (helm history --max 2 \$P1_PROJECT | head -n 2 | tail -n 1 | cut -f 1 | xargs helm rollback \$P1_PROJECT && exit 1)'
