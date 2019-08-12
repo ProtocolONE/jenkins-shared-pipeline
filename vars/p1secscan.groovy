@@ -1,4 +1,6 @@
 def call() {
     echo "Running aqua microscanner"
-    aquaMicroscanner imageName: "$CI_REGISTRY_IMAGE:$BRANCH_NAME-$BUILD_ID", notCompliesCmd: '', onDisallowed: 'ignore', outputFormat: 'html'
+    BR_NAME=env.BRANCH_NAME
+    BR_NAME=BR_NAME.replaceAll("/","_")
+    aquaMicroscanner imageName: "$CI_REGISTRY_IMAGE:${BR_NAME}-$BUILD_ID", notCompliesCmd: '', onDisallowed: 'ignore', outputFormat: 'html'
 }
