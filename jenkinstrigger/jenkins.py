@@ -16,6 +16,7 @@ import os
 import sys 
 import json
 import time
+import urllib.parse
 
 # secs for polling Jenkins API
 #
@@ -26,10 +27,10 @@ OVERALL_TIMEOUT = 3600 # 1 hour
 # job specifics: should be passed in
 jenkins_uri = os.environ.get('JENKINS_URI') or 'jenkins.protocol.one'
 job_name = 'jobrunner'
-auth_token = os.environ['JENKINS_AUTH_TOKEN']
-build_token = os.environ['JENKINS_BUILD_TOKEN']
-build_project = os.environ['JENKINS_BUILD_PROJECT']
-build_branch = os.environ['JENKINS_BUILD_BRANCH']
+auth_token = urllib.parse.quote(os.environ['JENKINS_AUTH_TOKEN'], safe=':')
+build_token = urllib.parse.quote(os.environ['JENKINS_BUILD_TOKEN'])
+build_project = urllib.parse.quote(os.environ['JENKINS_BUILD_PROJECT'], safe='/')
+build_branch = urllib.parse.quote(os.environ['JENKINS_BUILD_BRANCH'], safe='')
 
 post_payload = {'PROJECT': build_project, 'BRANCH': build_branch}
 
