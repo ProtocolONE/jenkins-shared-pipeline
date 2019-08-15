@@ -3,6 +3,7 @@ def call(project, registry, devBranch = "", devNameSpace = "",ingressPrefix="dev
   pipeline {
     options {
         buildDiscarder(logRotator(numToKeepStr:'10'))
+        disableConcurrentBuilds()
         timeout(time: 20, unit: 'MINUTES')
         timestamps()
         }
