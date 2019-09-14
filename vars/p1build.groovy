@@ -13,7 +13,7 @@ def call() {
                     BR_NAME=env.BRANCH_NAME
                     BR_NAME=BR_NAME.replaceAll("/","-").toLowerCase()
                     sh """
-                    JENKINS_GID=$(id -g)
+                    JENKINS_GID=`id -g`
                     if [ -f Makefile ]
                     then
                         DIND=1 TAG=${BR_NAME}-$BUILD_ID DIND_UID=${env.UID} DIND_GUID=${JENKINS_GID} make vendor
