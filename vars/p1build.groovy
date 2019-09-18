@@ -11,7 +11,7 @@ def call() {
                     }
                     checkout scm
                     BR_NAME=env.BRANCH_NAME
-                    BR_NAME=BR_NAME.replaceAll("/","-").toLowerCase()
+                    BR_NAME=BR_NAME.replaceAll("/","-").replaceAll("_","-").toLowerCase()
                     sh """
                     
                     if [ -f Makefile ]
@@ -29,7 +29,7 @@ def call() {
     echo "Pushing image"
         script {
                     BR_NAME=env.BRANCH_NAME
-                    BR_NAME=BR_NAME.replaceAll("/","-").toLowerCase()
+                    BR_NAME=BR_NAME.replaceAll("/","-").replaceAll("_","-").toLowerCase()
                     withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'p1docker',
                     usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD']]) {
                     sh """
