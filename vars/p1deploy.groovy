@@ -29,7 +29,7 @@ def call(devBranch = "", devNameSpace = "",ingressPrefix="dev-") {
 
             sh """
                 export NGX_IMAGE=`if [ -f Dockerfile.nginx ]; then echo \$CI_REGISTRY_IMAGE ; else echo nginx; fi`
-                export HELM_DIR=`[ -d ./deployments/helm ] && echo "./deployments/helm" || echo ".helm"`
+                export HELM_DIR=`[ -d deployments/helm ] && echo "./deployments/helm" || echo ".helm"`
                 echo "Helm dir: \$HELM_DIR"
                 docker run \
                 --rm \
