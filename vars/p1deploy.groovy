@@ -29,9 +29,11 @@ def call(devBranch = "", devNameSpace = "",ingressPrefix="dev-") {
 
             sh """
                 export NGX_IMAGE=`if [ -f Dockerfile.nginx ]; then echo \$CI_REGISTRY_IMAGE ; else echo nginx; fi`
+                HELM_DIR = [ -d ./deployments/helm ] && "./deployments/helm" || ".helm"
+                echo "Helm dir: $HELM_DIR"
                 docker run \
                 --rm \
-                -v \$PWD/.helm:/.helm \
+                -v \$PWD/$HELM_DIR:/.helm \
                 -e "K8S_API_URL=\$K8S_API_URL" \
                 -e "K8S_CI_TOKEN=\$K8S_CI_TOKEN" \
                 -e "P1_PROJECT=\$P1_PROJECT" \
