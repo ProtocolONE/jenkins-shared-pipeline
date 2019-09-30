@@ -33,7 +33,7 @@ def call(devBranch = "", devNameSpace = "",ingressPrefix="dev-") {
                 echo "Helm dir: $HELM_DIR"
                 docker run \
                 --rm \
-                -v \$PWD/$HELM_DIR:/.helm \
+                -v \$PWD/\$HELM_DIR:/.helm \
                 -e "K8S_API_URL=\$K8S_API_URL" \
                 -e "K8S_CI_TOKEN=\$K8S_CI_TOKEN" \
                 -e "P1_PROJECT=\$P1_PROJECT" \
