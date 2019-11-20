@@ -17,7 +17,7 @@ def call() {
                     JENKINS_GID=sh(script: 'id -g', , returnStdout: true).trim()
 
                     sh """
-                    if [ -f Makefile ]
+                    if [[ -f Makefile && ! -f Dockerfile ]]
                     then
                         GOPATH=/go DIND=1 TAG=${BR_NAME}-$BUILD_ID DIND_UID=$JENKINS_UID DIND_GUID=$JENKINS_GID make build-jenkins
                         GOPATH=/go DIND=1 TAG=${BR_NAME}-$BUILD_ID DIND_UID=$JENKINS_UID DIND_GUID=$JENKINS_GID make docker-image-jenkins
