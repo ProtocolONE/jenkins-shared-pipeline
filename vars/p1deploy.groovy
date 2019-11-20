@@ -57,7 +57,7 @@ def call(devBranch = "", devNameSpace = "",ingressPrefix="dev-") {
                 --set frontend.imageTag=${BR_NAME}-${env.BUILD_ID}-static \
                 --wait \
                 --timeout 180 ||
-                (helm history --max 2 \$P1_PROJECT | head -n 2 | tail -n 1 | cut -f 1 | xargs helm rollback \$P1_PROJECT && exit 1)'
+                (helm history --max 2 ${helmRelease} | head -n 2 | tail -n 1 | cut -f 1 | xargs helm rollback ${helmRelease} && exit 1)'
                 """
             }
         }
