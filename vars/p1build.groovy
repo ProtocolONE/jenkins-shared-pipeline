@@ -11,7 +11,7 @@ def call() {
                     }
                     checkout scm
                     BR_NAME=env.BRANCH_NAME
-                    BR_NAME=BR_NAME.replaceAll("/","-").replaceAll("_","-").toLowerCase()
+                    BR_NAME=BR_NAME.replaceAll("/","-").replaceAll("_","-").replaceAll("#","").toLowerCase()
 
                     JENKINS_UID=sh(script: 'id -u', , returnStdout: true).trim()
                     JENKINS_GID=sh(script: 'id -g', , returnStdout: true).trim()
@@ -31,7 +31,7 @@ def call() {
     echo "Pushing image"
         script {
                     BR_NAME=env.BRANCH_NAME
-                    BR_NAME=BR_NAME.replaceAll("/","-").replaceAll("_","-").toLowerCase()
+                    BR_NAME=BR_NAME.replaceAll("/","-").replaceAll("_","-").replaceAll("#","").toLowerCase()
                     withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'p1docker',
                     usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD']]) {
                     sh """
