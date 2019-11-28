@@ -14,7 +14,7 @@ def call(devBranch = "", devNameSpace = "",ingressPrefix="dev-") {
             k8sNameSpace="default"
             k8sIngressPrefix=""
             BR_NAME=env.BRANCH_NAME
-            BR_NAME=BR_NAME.replaceAll("/","-").replaceAll("_","-").toLowerCase()
+            BR_NAME=BR_NAME.replaceAll("/","-").replaceAll("_","-").replaceAll("#","").toLowerCase()
             helmDebug="--debug"
 
             if(devBranch!="" && devBranch==BR_NAME){
