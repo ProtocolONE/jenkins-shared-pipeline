@@ -18,7 +18,7 @@ def call() {
 
                     registryImage=env.CI_REGISTRY_IMAGE
                     if(env.JOB_NAME.indexOf("qilin/auth1.protocol.one")!=-1){
-                        registryImage="qilin-"+env.CI_REGISTRY_IMAGE
+                        registryImage=env.CI_REGISTRY_IMAGE+"-qilin"
                     }
 
 
@@ -40,17 +40,18 @@ def call() {
                     BR_NAME=env.BRANCH_NAME
                     BR_NAME=BR_NAME.replaceAll("/","-").replaceAll("_","-").replaceAll("#","").toLowerCase()
                     withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'p1docker',
-                    usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD']]) {
-                    registryImage = env.CI_REGISTRY_IMAGE
-                    if(env.JOB_NAME.indexOf("qilin/auth1.protocol.one")!=-1){
-                        registryImage="qilin-"+env.CI_REGISTRY_IMAGE
-                    }
-                    sh """
-                        echo "CI_REGISTRY_IMAGE: ${registryImage}"
-                        docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-                        docker push ${registryImage}:${BR_NAME}-$BUILD_ID
-                        (if [ -f Dockerfile.nginx ]; then docker push ${registryImage}:${BR_NAME}-$BUILD_ID-static ; else echo "Project without static content"; fi);
-                    """
+                        usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD']]) 
+                    {
+                        registryImage = env.CI_REGISTRY_IMAGE
+                        if(env.JOB_NAME.indexOf("qilin/auth1.protocol.one")!=-1){
+                            registryImage=env.CI_REGISTRY_IMAGE+"-qilin"
+                        }
+                        sh """
+                            echo "CI_REGISTRY_IMAGE: ${registryImage}"
+                            docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+                            docker push ${registryImage}:${BR_NAME}-$BUILD_ID
+                            (if [ -f Dockerfile.nginx ]; then docker push ${registryImage}:${BR_NAME}-$BUILD_ID-static ; else echo "Project without static content"; fi);
+                        """
                     }
                 }
 }

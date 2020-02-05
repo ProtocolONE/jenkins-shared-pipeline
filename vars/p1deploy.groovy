@@ -33,7 +33,7 @@ def call(devBranch = "", devNameSpace = "",ingressPrefix="dev-") {
             if(env.JOB_NAME.indexOf("qilin/auth1.protocol.one")!=-1){
                 k8sIngressPrefix="qilin-"+k8sIngressPrefix
                 helmRelease="qilin"+helmRelease
-                registryImage="qilin-"+registryImage
+                registryImage=registryImage+"-qilin"
             }
 
             sh """
