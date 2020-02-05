@@ -30,7 +30,7 @@ def call(devBranch = "", devNameSpace = "",ingressPrefix="dev-") {
 
             registryImage = env.CI_REGISTRY_IMAGE
 
-            if(${JOB_NAME}.indexOf("qilin/auth1.protocol.one")!=-1){
+            if(env.JOB_NAME.indexOf("qilin/auth1.protocol.one")!=-1){
                 k8sIngressPrefix="qilin-"+k8sIngressPrefix
                 helmRelease="qilin"+helmRelease
                 registryImage="qilin-"+registryImage
