@@ -28,7 +28,7 @@ def call(devBranch = "", devNameSpace = "",ingressPrefix="dev-") {
             }
             sh "echo branch: ${BR_NAME} helm release: ${helmRelease}"
 
-            registryImage = ${env.CI_REGISTRY_IMAGE}
+            registryImage = env.CI_REGISTRY_IMAGE
 
             if(${JOB_NAME}.indexOf("qilin/auth1.protocol.one")!=-1){
                 k8sIngressPrefix="qilin-"+k8sIngressPrefix

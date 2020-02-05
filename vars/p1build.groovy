@@ -16,9 +16,9 @@ def call() {
                     JENKINS_UID=sh(script: 'id -u', , returnStdout: true).trim()
                     JENKINS_GID=sh(script: 'id -g', , returnStdout: true).trim()
 
-                    registryImage=${env.CI_REGISTRY_IMAGE}
+                    registryImage=env.CI_REGISTRY_IMAGE
                     if(${JOB_NAME}.indexOf("qilin/auth1.protocol.one")!=-1){
-                        registryImage="qilin-"+${env.CI_REGISTRY_IMAGE}
+                        registryImage="qilin-"+env.CI_REGISTRY_IMAGE
                     }
 
 
@@ -41,9 +41,9 @@ def call() {
                     BR_NAME=BR_NAME.replaceAll("/","-").replaceAll("_","-").replaceAll("#","").toLowerCase()
                     withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'p1docker',
                     usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD']]) {
-                    registryImage = ${env.CI_REGISTRY_IMAGE}
+                    registryImage = env.CI_REGISTRY_IMAGE
                     if(${JOB_NAME}.indexOf("qilin/auth1.protocol.one")!=-1){
-                        registryImage="qilin-"+${env.CI_REGISTRY_IMAGE}
+                        registryImage="qilin-"+env.CI_REGISTRY_IMAGE
                     }
                     sh """
                         echo "CI_REGISTRY_IMAGE: ${registryImage}"
