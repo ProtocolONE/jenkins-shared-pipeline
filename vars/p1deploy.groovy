@@ -28,9 +28,12 @@ def call(devBranch = "", devNameSpace = "",ingressPrefix="dev-") {
             }
             sh "echo branch: ${BR_NAME} helm release: ${helmRelease}"
 
+            registryImage = ${env.CI_REGISTRY_IMAGE}
+
             if(${JOB_NAME}.indexOf("qilin/auth1.protocol.one")!=-1){
                 k8sIngressPrefix="qilin-"+k8sIngressPrefix
                 helmRelease="qilin"+helmRelease
+                registryImage="qilin-"+registryImage
             }
 
             sh """
@@ -57,7 +60,7 @@ def call(devBranch = "", devNameSpace = "",ingressPrefix="dev-") {
                 ${helmDebug} \
                 --namespace=${k8sNameSpace} \
                 --set ingress.hostnamePrefix=${k8sIngressPrefix} \
-                --set backend.image=${env.CI_REGISTRY_IMAGE} \
+                --set backend.image=${registryImage} \
                 --set backend.imageTag=${BR_NAME}-${env.BUILD_ID} \
                 --set frontend.image=\$NGX_IMAGE \
                 --set frontend.imageTag=${BR_NAME}-${env.BUILD_ID}-static \
