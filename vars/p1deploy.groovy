@@ -17,6 +17,8 @@ def call(devBranch = "", devNameSpace = "",ingressPrefix="dev-") {
             BR_NAME=BR_NAME.replaceAll("/","-").replaceAll("_","-").replaceAll("#","").toLowerCase()
             helmDebug="--debug"
 
+            sh "echo job_name: ${JOB_NAME}"
+
             if(devBranch!="" && devBranch==BR_NAME){
                 k8sNameSpace=devNameSpace
                 k8sIngressPrefix=ingressPrefix
