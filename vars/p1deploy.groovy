@@ -28,6 +28,10 @@ def call(devBranch = "", devNameSpace = "",ingressPrefix="dev-") {
             }
             sh "echo branch: ${BR_NAME} helm release: ${helmRelease}"
 
+            if(${JOB_NAME}.indexOf("qilin/auth1.protocol.one")!=-1){
+                k8sIngressPrefix="qilin-"+k8sIngressPrefix
+                helmRelease="qilin"+helmRelease
+            }
 
             sh """
                 export NGX_IMAGE=`if [ -f Dockerfile.nginx ]; then echo \$CI_REGISTRY_IMAGE ; else echo nginx; fi`
