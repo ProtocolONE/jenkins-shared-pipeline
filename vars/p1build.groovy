@@ -50,7 +50,7 @@ def call() {
                             echo "CI_REGISTRY_IMAGE: ${registryImage}"
                             docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
                             docker push ${registryImage}:${BR_NAME}-$BUILD_ID
-                            if [[ -f Makefile && ! -f Dockerfile ]]
+                            if [[ ! -f Makefile ]]
                             then
                                 docker push ${registryImage}:${BR_NAME}
                             fi
