@@ -4,7 +4,7 @@ def call() {
 
         def getBranches = ("git ls-remote -t -h ${repositoryUrl}").execute()
 
-        def branchList = getBranches.text.readLines().collect {
+        def BranchList = getBranches.text.readLines().collect {
                 it.split()[1].replaceAll('refs/heads/', '').replaceAll('refs/tags/', '').replaceAll("\\^\\{\\}", '')
         }
 
@@ -13,7 +13,7 @@ def call() {
                 [
                 $class: 'ChoiceParameterDefinition',
                 name: 'BRANCH', 
-                choices: branchList,
+                choices: BranchList,
                 description: 'Project branches'
                 ],
             ]
