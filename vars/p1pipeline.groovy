@@ -18,7 +18,7 @@ def call(project, registry, devBranch = "", devNameSpace = "",ingressPrefix="dev
     parameters {
         booleanParam(name: 'PROD_RELEASE', defaultValue: false, description: 'Release to production')
         booleanParam(name: 'ROLLBACK', defaultValue: false, description: 'Rollback project?')
-        gitParameter(branchFilter: 'origin.*/(.*)', defaultValue: 'develop', description: '', name: 'SELECT_BRANCH', type: 'PT_BRANCH')
+        booleanParam(name: 'CUSTOM_BUILD', defaultValue: false, description: 'Want to choose a custom branch?')
     }    
     stages {
             stage('Rollback') {
@@ -28,6 +28,17 @@ def call(project, registry, devBranch = "", devNameSpace = "",ingressPrefix="dev
                 steps {
                     script {
                         p1rollback()
+                    }
+                }
+            }
+
+            stage('CUSTOM_BUILD') {
+                when {
+                    expression {params.CUSTOM_BUILD == true}
+                }
+                steps {
+                    script {
+                        p1custombranch()
                     }
                 }
             }
