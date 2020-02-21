@@ -9,7 +9,7 @@ def call() {
         }
 
         echo "List of project branches: ${branchList}"
-        env.BRANCH_NAME=master
+        env.BRANCH_NAME="master"
 
     }
 }
