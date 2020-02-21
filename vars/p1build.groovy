@@ -11,7 +11,7 @@ def call() {
                     }
                     checkout scm: [
                         $class: 'GitSCM',
-                        branches: env.BRANCH_NAME,
+                        branches: scm.branches,
                         doGenerateSubmoduleConfigurations: false,
                         extensions: [[$class: 'SubmoduleOption',
                                       disableSubmodules: false,
