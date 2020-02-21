@@ -14,7 +14,7 @@ def call() {
                 $class: 'ChoiceParameterDefinition',
                 name: 'BRANCH', 
                 choices: branchList.join("\n"),
-                description: 'Helm revisions'
+                description: 'Project branches'
                 ],
             ]
 
