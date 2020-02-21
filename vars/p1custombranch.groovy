@@ -8,8 +8,18 @@ def call() {
                 it.split()[1].replaceAll('refs/heads/', '').replaceAll('refs/tags/', '').replaceAll("\\^\\{\\}", '')
         }
 
-        echo "List of project branches: ${branchList}"
-        env.BRANCH_NAME="master"
+        def selectBranch = input message: 'Please select branch', ok: 'Next',
+            parameters: [
+                [
+                $class: 'ChoiceParameterDefinition',
+                name: 'BRANCH', 
+                choices: branchList.join("\n"),
+                description: 'Helm revisions'
+                ],
+            ]
 
+        def selectedBranch = sh (returnStdout: true, script: "echo ${selectBranch} | cut -d ' ' -f 1")
+        echo "You selected branch with name: ${selectedBranch}"
+        env.BRANCH_NAME=selectedBranch
     }
 }
