@@ -8,6 +8,7 @@ def call() {
                         sh ''' echo "production release"'''              
                     } else {
                         sh ''' echo "test release"'''
+                        sh "echo job_name: ${BR_NAME}" 
                     }
                     checkout scm: [
                         $class: 'GitSCM',
@@ -23,6 +24,7 @@ def call() {
                         userRemoteConfigs: scm.userRemoteConfigs
                     ]
                     BR_NAME=env.BRANCH_NAME
+                    
                     BR_NAME=BR_NAME.replaceAll("/","-").replaceAll("_","-").replaceAll("#","").toLowerCase()
 
                     JENKINS_UID=sh(script: 'id -u', , returnStdout: true).trim()
