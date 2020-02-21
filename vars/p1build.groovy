@@ -11,7 +11,7 @@ def call() {
                     }
                     checkout scm: [
                         $class: 'GitSCM',
-                        branches: scm.branches,
+                        branches: env.BRANCH_NAME,
                         doGenerateSubmoduleConfigurations: false,
                         extensions: [[$class: 'SubmoduleOption',
                                       disableSubmodules: false,
@@ -23,7 +23,6 @@ def call() {
                         userRemoteConfigs: scm.userRemoteConfigs
                     ]
                     BR_NAME=env.BRANCH_NAME
-                    sh "echo job_name: ${BR_NAME}"
                     BR_NAME=BR_NAME.replaceAll("/","-").replaceAll("_","-").replaceAll("#","").toLowerCase()
 
                     JENKINS_UID=sh(script: 'id -u', , returnStdout: true).trim()
