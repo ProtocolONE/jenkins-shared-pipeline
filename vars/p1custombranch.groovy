@@ -13,7 +13,7 @@ def call() {
                 [
                 $class: 'ChoiceParameterDefinition',
                 name: 'BRANCH', 
-                choices: getBranches,
+                choices: branchList,
                 description: 'Project branches'
                 ],
             ]
