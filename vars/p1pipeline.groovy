@@ -18,6 +18,7 @@ def call(project, registry, devBranch = "", devNameSpace = "",ingressPrefix="dev
     parameters {
         booleanParam(name: 'PROD_RELEASE', defaultValue: false, description: 'Release to production')
         booleanParam(name: 'ROLLBACK', defaultValue: false, description: 'Rollback project?')
+        gitParameter(branch: '', branchFilter: 'origin/(.*)', defaultValue: 'develop', description: '', name: 'SELECT_BRANCH', quickFilterEnabled: false, selectedValue: 'NONE', sortMode: 'NONE', tagFilter: '*', type: 'PT_BRANCH')
     }    
     stages {
             stage('Rollback') {
