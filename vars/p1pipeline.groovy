@@ -45,7 +45,7 @@ def call(project, registry, devBranch = "", devNameSpace = "",ingressPrefix="dev
 
             stage('Build') {
                 when {
-                    expression {params.ROLLBACK == false || params.CUSTOM_BUILD == false }
+                    expression {params.ROLLBACK == false}
                 }
                 steps {
                     script {
@@ -56,7 +56,7 @@ def call(project, registry, devBranch = "", devNameSpace = "",ingressPrefix="dev
     
             stage('SecScan') {
                 when {
-                    expression {params.ROLLBACK == false || params.CUSTOM_BUILD == false}
+                    expression {params.ROLLBACK == false}
                 }
                 steps {
                     script {
@@ -67,7 +67,7 @@ def call(project, registry, devBranch = "", devNameSpace = "",ingressPrefix="dev
 
             stage('Staging Deployment') {
                 when {
-                    expression {params.ROLLBACK == false || params.CUSTOM_BUILD == false}
+                    expression {params.ROLLBACK == false}
                 }
                 steps {
                     script {
