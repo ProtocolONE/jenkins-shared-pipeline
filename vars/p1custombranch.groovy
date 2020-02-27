@@ -1,5 +1,11 @@
+def getBuildUser() {
+    return currentBuild.rawBuild.getCause(Cause.UserIdCause).getUserId()
+}
+
 def call() {
     script {
+        BUILD_USER = getBuildUser()
+
         def repositoryUrl = scm.userRemoteConfigs[0].url
 
         def getBranches = ("git ls-remote -t -h ${repositoryUrl}").execute()
