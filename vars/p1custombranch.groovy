@@ -10,12 +10,13 @@ def call() {
 
         def selectBranch = input message: 'Please select branch', ok: 'Next',
             parameters: [
-                [
-                $class: 'ChoiceParameterDefinition',
-                name: 'BRANCH', 
-                choices: 'develop\nmaster\n',
-                description: 'Project branches'
-                ],
+                //[
+                //$class: 'ChoiceParameterDefinition',
+                choice(
+                    name: 'BRANCH', 
+                    choices: BranchList,
+                    description: 'Project branches')
+                //]
             ]
 
         def selectedBranch = sh (returnStdout: true, script: "echo ${selectBranch} | cut -d ' ' -f 1")
