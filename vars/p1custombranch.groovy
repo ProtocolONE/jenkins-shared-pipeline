@@ -16,7 +16,7 @@ def call() {
                 name: 'BRANCH', 
                 choices: BranchList,
                 description: 'Project branches'
-                ],
+                ]
             ]
 
         //def selectedBranch = sh (returnStdout: true, script: "echo ${selectBranch} | cut -d ' ' -f 1")
