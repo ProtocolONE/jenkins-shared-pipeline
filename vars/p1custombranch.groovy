@@ -9,12 +9,12 @@ def call() {
         }
         echo "BranchList: ${BranchList}"
         
-        selectBranch = input message: 'Please select branch', ok: 'Next',
+        def selectBranch = input message: 'Please select branch', ok: 'Next',
             parameters: [
                 [
                 $class: 'ChoiceParameterDefinition',
                 name: 'BRANCH', 
-                choices: BranchList,
+                choices: 'Choice 1\nChoice 2\nChoice 3',
                 description: 'Project branches'
                 ],
             ]
