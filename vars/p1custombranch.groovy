@@ -1,11 +1,5 @@
-def getBuildUser() {
-    return currentBuild.rawBuild.getCause(Cause.UserIdCause).getUserId()
-}
-
 def call() {
     script {
-        BUILD_USER = getBuildUser()
-
         def repositoryUrl = scm.userRemoteConfigs[0].url
 
         def getBranches = ("git ls-remote -t -h ${repositoryUrl}").execute()
@@ -13,17 +7,18 @@ def call() {
         def BranchList = getBranches.text.readLines().collect {
                 it.split()[1].replaceAll('refs/heads/', '').replaceAll('refs/tags/', '').replaceAll("\\^\\{\\}", '')
         }
-
-        def selectBranch = input message: 'Please select branch', ok: 'Next',
-            parameters: [
+        echo "BranchList: ${BranchList}"
+        selectedBranch="develop"
+        //def selectBranch = input message: 'Please select branch', ok: 'Next',
+            //parameters: [
                 //[
                 //$class: 'ChoiceParameterDefinition',
-                choice(
-                    name: 'BRANCH', 
-                    choices: BranchList,
-                    description: 'Project branches')
+                //choice(
+                    //name: 'BRANCH', 
+                    //choices: BranchList,
+                    //description: 'Project branches')
                 //]
-            ]
+            //]
 
         def selectedBranch = sh (returnStdout: true, script: "echo ${selectBranch} | cut -d ' ' -f 1")
         echo "You selected branch with name: ${selectedBranch}"
