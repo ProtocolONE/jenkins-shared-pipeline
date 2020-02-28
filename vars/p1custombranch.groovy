@@ -1,3 +1,7 @@
+def getBuildUser() {
+    return currentBuild.rawBuild.getCause(Cause.UserIdCause).getUserId()
+}
+
 def call() {
     script {
         def repositoryUrl = scm.userRemoteConfigs[0].url
@@ -22,9 +26,8 @@ def call() {
                     ]
             }
         } catch(err) {
-            def user = err.getCauses()[0].getUser()
-            echo "Input aborted by: [${user}]"
-            error("Pipeline aborted by: [${user}]")
+            BUILD_USER = getBuildUser()
+            echo "Input aborted by: [${BUILD_USER}]"
         }
         //def selectedBranch = sh (returnStdout: true, script: "echo ${selectBranch} | cut -d ' ' -f 1")
         echo "You selected branch with name: ${selectBranch}"
