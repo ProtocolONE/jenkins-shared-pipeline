@@ -8,7 +8,7 @@ def call() {
                 it.split()[1].replaceAll('refs/heads/', '').replaceAll('refs/tags/', '').replaceAll("\\^\\{\\}", '')
         }
         echo "BranchList: ${BranchList}"
-        selectedBranch="develop"
+        selectBranch="develop"
         //def selectBranch = input message: 'Please select branch', ok: 'Next',
             //parameters: [
                 //[
