@@ -1,7 +1,3 @@
-def getBuildUser() {
-    return currentBuild.rawBuild.getCause(Cause.UserIdCause).getUserId()
-}
-
 def call() {
     script {
         def repositoryUrl = scm.userRemoteConfigs[0].url
@@ -15,19 +11,26 @@ def call() {
         
         try {
             timeout(time:60, unit:'SECONDS') {
-                def selectBranch = input message: 'Please select branch', ok: 'Next',
+/*                def selectBranch = input message: 'Please select branch', ok: 'Next',
                     parameters: [
                         [
                         $class: 'ChoiceParameterDefinition',
                         name: 'BRANCH', 
-                        choices: 'Choice 1\nChoice 2\nChoice 3',
+                        choices: BranchList,
                         description: 'Project branches'
                         ]
                     ]
-            }
+            }*/
+                BRANCH_TO_BUILD_REQUESTED = input(
+                    message: 'Input branch to build', 
+                    parameters: [
+                        [$class: 'TextParameterDefinition', 
+                            defaultValue: BRANCH_TO_BUILD_DEFAULT, 
+                            description: 'Branch name', name: 'Enter branch name (or leave default) and press [Proceed]:']
+                    ])
+                    echo ("User has entered the branch name: " + BRANCH_TO_BUILD_REQUESTED)
         } catch(err) {
-            BUILD_USER = getBuildUser()
-            echo "Input aborted by: [${BUILD_USER}]"
+            echo "Input aborted"
         }
         //def selectedBranch = sh (returnStdout: true, script: "echo ${selectBranch} | cut -d ' ' -f 1")
         //echo "You selected branch with name: ${selectBranch}"
