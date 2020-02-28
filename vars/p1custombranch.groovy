@@ -30,7 +30,7 @@ def call() {
             echo "Input aborted by: [${BUILD_USER}]"
         }
         //def selectedBranch = sh (returnStdout: true, script: "echo ${selectBranch} | cut -d ' ' -f 1")
-        echo "You selected branch with name: ${selectBranch}"
+        //echo "You selected branch with name: ${selectBranch}"
         //env.BRANCH_NAME=selectedBranch
     }
 }
