@@ -8,7 +8,7 @@ def call() {
                 it.split()[1].replaceAll('refs/heads/', '').replaceAll('refs/tags/', '').replaceAll("\\^\\{\\}", '')
         }
         echo "BranchList: ${BranchList}"
-        selectBranch="develop"
+        //selectBranch="develop"
         //def selectBranch = input message: 'Please select branch', ok: 'Next',
             //parameters: [
                 //[
@@ -20,8 +20,8 @@ def call() {
                 //]
             //]
 
-        def selectedBranch = sh (returnStdout: true, script: "echo ${selectBranch} | cut -d ' ' -f 1")
-        echo "You selected branch with name: ${selectedBranch}"
-        env.BRANCH_NAME=selectedBranch
+        //def selectedBranch = sh (returnStdout: true, script: "echo ${selectBranch} | cut -d ' ' -f 1")
+        //echo "You selected branch with name: ${selectedBranch}"
+        //env.BRANCH_NAME=selectedBranch
     }
 }
