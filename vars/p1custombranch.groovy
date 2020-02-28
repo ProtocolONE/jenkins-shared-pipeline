@@ -29,6 +29,7 @@ def call() {
                             description: 'Branch name', name: 'Enter branch name (or leave default) and press [Proceed]:']
                     ])
                     echo ("User has entered the branch name: " + BRANCH_TO_BUILD_REQUESTED)
+            }
         } catch(err) {
             echo "Input aborted"
         }
