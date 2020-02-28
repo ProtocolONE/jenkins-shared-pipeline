@@ -9,16 +9,23 @@ def call() {
         }
         echo "BranchList: ${BranchList}"
         
-        def selectBranch = input message: 'Please select branch', ok: 'Next',
-            parameters: [
-                [
-                $class: 'ChoiceParameterDefinition',
-                name: 'BRANCH', 
-                choices: BranchList,
-                description: 'Project branches'
-                ]
-            ]
-
+        try {
+            timeout(time:60, unit:'SECONDS') {
+                def selectBranch = input message: 'Please select branch', ok: 'Next',
+                    parameters: [
+                        [
+                        $class: 'ChoiceParameterDefinition',
+                        name: 'BRANCH', 
+                        choices: BranchList,
+                        description: 'Project branches'
+                        ]
+                    ]
+            }
+        } catch(err) {
+            def user = err.getCauses()[0].getUser()
+            echo "Input aborted by: [${user}]"
+            error("Pipeline aborted by: [${user}]")
+        }
         //def selectedBranch = sh (returnStdout: true, script: "echo ${selectBranch} | cut -d ' ' -f 1")
         echo "You selected branch with name: ${selectBranch}"
         //env.BRANCH_NAME=selectedBranch
