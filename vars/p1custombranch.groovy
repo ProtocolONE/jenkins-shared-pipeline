@@ -14,13 +14,13 @@ def call() {
                 [
                 $class: 'ChoiceParameterDefinition',
                 name: 'BRANCH', 
-                choices: 'Choice 1\nChoice 2\nChoice 3',
+                choices: BranchList,
                 description: 'Project branches'
                 ],
             ]
 
-        def selectedBranch = sh (returnStdout: true, script: "echo ${selectBranch} | cut -d ' ' -f 1")
-        echo "You selected branch with name: ${selectedBranch}"
+        //def selectedBranch = sh (returnStdout: true, script: "echo ${selectBranch} | cut -d ' ' -f 1")
+        echo "You selected branch with name: ${selectBranch}"
         //env.BRANCH_NAME=selectedBranch
     }
 }
