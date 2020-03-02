@@ -11,16 +11,7 @@ def call() {
                     }
                     checkout scm: [
                         $class: 'GitSCM',
-                        branches: scm.branches,
-                        doGenerateSubmoduleConfigurations: false,
-                        extensions: [[$class: 'SubmoduleOption',
-                                      disableSubmodules: false,
-                                      parentCredentials: false,
-                                      recursiveSubmodules: true,
-                                      reference: '',
-                                      trackingSubmodules: false]],
-                        submoduleCfg: [],
-                        userRemoteConfigs: scm.userRemoteConfigs
+                        branches: scm.branches
                     ]
                     BR_NAME=env.BRANCH_NAME
                     BR_NAME=BR_NAME.replaceAll("/","-").replaceAll("_","-").replaceAll("#","").toLowerCase()
