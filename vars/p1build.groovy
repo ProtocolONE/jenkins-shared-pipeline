@@ -9,10 +9,7 @@ def call() {
                     } else {
                         sh ''' echo "test release"''' 
                     }
-                    checkout scm: [
-                        $class: 'GitSCM',
-                        branches: scm.branches
-                    ]
+                    checkout scm
                     BR_NAME=env.BRANCH_NAME
                     BR_NAME=BR_NAME.replaceAll("/","-").replaceAll("_","-").replaceAll("#","").toLowerCase()
 
