@@ -25,7 +25,8 @@ def call() {
                     message: 'Input branch to build', 
                     parameters: [
                         [$class: 'TextParameterDefinition', 
-                            defaultValue: BRANCH_TO_BUILD_DEFAULT, 
+                            //defaultValue: BRANCH_TO_BUILD_DEFAULT, 
+                            defaultValue: 'develop', 
                             description: 'Branch name', name: 'Enter branch name (or leave default) and press [Proceed]:']
                     ])
                     echo ("User has entered the branch name: " + BRANCH_TO_BUILD_REQUESTED)
