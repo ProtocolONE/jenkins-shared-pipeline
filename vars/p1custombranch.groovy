@@ -20,7 +20,7 @@ def call() {
                 ]
             ]
 
-        def selectedBranch = sh (returnStdout: true, script: "echo ${selectBranch} | cut -d ' ' -f 1")
+        def selectedBranch = sh (returnStdout: true, script: "echo ${selectBranch}")
         echo "You selected branch with name: ${selectBranch}"
         //env.BRANCH_NAME=selectedBranch
     }
