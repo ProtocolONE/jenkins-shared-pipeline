@@ -21,6 +21,7 @@ def call() {
                         ]
                     ]
             }*/
+                @NonCPS
                 BRANCH_TO_BUILD_REQUESTED = input(
                     message: 'Input branch to build', 
                     parameters: [
