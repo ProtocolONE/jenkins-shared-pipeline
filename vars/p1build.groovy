@@ -12,6 +12,7 @@ def call() {
                     checkout scm: [
                         $class: 'GitSCM',
                         branches: [[name: env.BRANCH_NAME]],
+                        extensions: scm.extensions + [[$class: 'LocalBranch'], [$class: 'CleanCheckout']],
                         userRemoteConfigs: scm.userRemoteConfigs
                     ]
                     BR_NAME=env.BRANCH_NAME
