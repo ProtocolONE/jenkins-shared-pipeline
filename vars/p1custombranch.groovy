@@ -3,7 +3,7 @@ def call() {
         def repositoryUrl = scm.userRemoteConfigs[0].url
 
         def getBranches = ("git ls-remote -t -h ${repositoryUrl}").execute()
-
+        @NonCPS
         def BranchList = getBranches.text.readLines().collect {
                 it.split()[1].replaceAll('refs/heads/', '').replaceAll('refs/tags/', '').replaceAll("\\^\\{\\}", '')
         }
@@ -46,7 +46,7 @@ def call() {
             echo "Input aborted"
         }
 
-        echo "You selected branch with name: ${selectBranch}"
+        //echo "You selected branch with name: ${selectBranch}"
 
         //def selectedBranch = sh (returnStdout: true, script: "echo ${selectBranch}")
         //echo "You selected branch with name: ${selectedBranch}"
