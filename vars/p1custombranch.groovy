@@ -1,4 +1,3 @@
-@NonCPS
 def call() {
     script {
         def repositoryUrl = scm.userRemoteConfigs[0].url
@@ -31,7 +30,8 @@ def call() {
                         ]
                     ]
             }*/
-                BRANCH_TO_BUILD_REQUESTED = input(
+            @NonCPS
+            def BRANCH_TO_BUILD_REQUESTED = input(
                     message: 'Input branch to build', 
                     parameters: [
                         [$class: 'TextParameterDefinition', 
@@ -45,7 +45,7 @@ def call() {
             echo err.getMessage()
             echo "Input aborted"
         }
-                    
+
         echo "You selected branch with name: ${selectBranch}"
 
         //def selectedBranch = sh (returnStdout: true, script: "echo ${selectBranch}")
