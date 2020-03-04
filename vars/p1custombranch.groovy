@@ -1,6 +1,6 @@
+@NonCPS
 def call() {
     script {
-        @NonCPS
         def repositoryUrl = scm.userRemoteConfigs[0].url
 
         def getBranches = ("git ls-remote -t -h ${repositoryUrl}").execute()
