@@ -32,6 +32,7 @@ def call() {
                     echo ("User has entered the branch name: " + BRANCH_TO_BUILD_REQUESTED)
             }
         } catch(err) {
+            echo err.getMessage()
             echo "Input aborted"
         }
         //def selectedBranch = sh (returnStdout: true, script: "echo ${selectBranch} | cut -d ' ' -f 1")
