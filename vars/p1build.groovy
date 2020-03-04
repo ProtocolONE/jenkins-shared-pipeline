@@ -9,13 +9,12 @@ def call() {
                     } else {
                         sh ''' echo "test release"''' 
                     }
-                    checkout scm
-                    /*checkout scm: [
+                    //checkout scm
+                    checkout scm: [
                         $class: 'GitSCM',
-                        branches: [[name: env.BRANCH_NAME]],
-                        extensions: [[$class: 'LocalBranch', localBranch: "**"]],
+                        branches: [[name: '*/${GIT_BRANCH}']],
                         userRemoteConfigs: scm.userRemoteConfigs
-                    ]*/
+                    ]
                     BR_NAME=env.BRANCH_NAME
                     BR_NAME=BR_NAME.replaceAll("/","-").replaceAll("_","-").replaceAll("#","").toLowerCase()
 
