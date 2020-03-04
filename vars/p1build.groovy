@@ -12,7 +12,7 @@ def call() {
                     //checkout scm
                     checkout scm: [
                         $class: 'GitSCM',
-                        branches: [[name: '*/${GIT_BRANCH}']],
+                        branches: [[name: '*/${BRANCH_NAME}']],
                         userRemoteConfigs: scm.userRemoteConfigs
                     ]
                     BR_NAME=env.BRANCH_NAME
