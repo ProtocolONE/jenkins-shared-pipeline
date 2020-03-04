@@ -1,5 +1,6 @@
 def call() {
     script {
+        @NonCPS
         def repositoryUrl = scm.userRemoteConfigs[0].url
 
         def getBranches = ("git ls-remote -t -h ${repositoryUrl}").execute()
@@ -21,7 +22,6 @@ def call() {
                         ]
                     ]
             }*/
-                @NonCPS
                 BRANCH_TO_BUILD_REQUESTED = input(
                     message: 'Input branch to build', 
                     parameters: [
