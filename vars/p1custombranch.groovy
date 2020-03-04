@@ -19,9 +19,10 @@ def call() {
                 description: 'Project branches'
                 ]
             ]
-
-        def selectedBranch = sh (returnStdout: true, script: "echo ${selectBranch}")
         echo "You selected branch with name: ${selectBranch}"
+
+        //def selectedBranch = sh (returnStdout: true, script: "echo ${selectBranch}")
+        //echo "You selected branch with name: ${selectedBranch}"
         //env.BRANCH_NAME=selectedBranch
     }
 }
