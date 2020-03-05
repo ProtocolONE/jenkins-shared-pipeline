@@ -16,6 +16,16 @@ def call() {
             echo err.getMessage()
             echo "Input aborted"
         }
+
+        checkout scm: [
+                        $class: 'GitSCM',
+                        branches: [[name: env.BRANCH_NAME]],
+                        userRemoteConfigs: [
+                            [url: env.GIT_URL,
+                            refspec: "+refs/heads/${BRANCH_NAME}:refs/remotes/origin/${BRANCH_NAME}",
+                            credentialsId: 'p1release']
+                        ]
+                    ]
         /*
         def repositoryUrl = scm.userRemoteConfigs[0].url
 
