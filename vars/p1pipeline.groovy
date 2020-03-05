@@ -80,7 +80,7 @@ def call(project, registry, devBranch = "", devNameSpace = "",ingressPrefix="dev
 
     post {
         success {
-            slackSend (color: '#00FF00', message: "SUCCESSFUL: Job '${env.JOB_NAME} branch: ${env.BRANCH_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+            slackSend (color: '#00FF00', message: "SUCCESSFUL: Job '${env.JOB_BASE_NAME} branch: ${env.BRANCH_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
         }
         
         failure {
