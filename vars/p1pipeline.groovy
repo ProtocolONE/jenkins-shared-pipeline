@@ -12,7 +12,6 @@ def call(project, registry, devBranch = "", devNameSpace = "",ingressPrefix="dev
         CI_REGISTRY_IMAGE = "p1hub/${registry}"
         P1_PROJECT = "${project}"
         BRANCH_TO_BUILD_DEFAULT = 'develop'
-        BRANCH_TO_BUILD_REQUESTED = "${params.BRANCH_TO_BUILD}"
     }
 
     agent any
@@ -21,7 +20,6 @@ def call(project, registry, devBranch = "", devNameSpace = "",ingressPrefix="dev
         booleanParam(name: 'PROD_RELEASE', defaultValue: false, description: 'Release to production')
         booleanParam(name: 'ROLLBACK', defaultValue: false, description: 'Rollback project?')
         booleanParam(name: 'CUSTOM_BUILD', defaultValue: false, description: 'Want to choose a custom branch?')
-        string(name: 'BRANCH_TO_BUILD', defaultValue: "develop", description: 'GIT branch to build')
     }    
     stages {
             stage('Rollback') {

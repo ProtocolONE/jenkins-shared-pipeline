@@ -17,7 +17,7 @@ def call() {
             echo "Input aborted"
         }
 
-        checkout scm: [
+        /*checkout scm: [
                         $class: 'GitSCM',
                         branches: [[name: env.BRANCH_NAME]],
                         userRemoteConfigs: [
@@ -25,7 +25,7 @@ def call() {
                             refspec: "+refs/heads/${BRANCH_NAME}:refs/remotes/origin/${BRANCH_NAME}",
                             credentialsId: 'p1release']
                         ]
-                    ]
+                    ]*/
         /*
         def repositoryUrl = scm.userRemoteConfigs[0].url
 
