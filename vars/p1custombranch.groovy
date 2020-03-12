@@ -1,6 +1,6 @@
 def call() {
     script {
-        try {
+        /*try {
             timeout(time:60, unit:'SECONDS') {
                 BRANCH_TO_BUILD_REQUESTED = input(
                     message: 'Input branch to build', 
@@ -8,14 +8,14 @@ def call() {
                         [$class: 'TextParameterDefinition', 
                             defaultValue: BRANCH_TO_BUILD_DEFAULT, 
                             description: 'Branch name', name: 'Enter branch name (or leave default) and press [Proceed]:']
-                    ])
+                    ])*/
                     echo ("User has entered the branch name: " + BRANCH_TO_BUILD_REQUESTED)
                     env.BRANCH_NAME=BRANCH_TO_BUILD_REQUESTED
-            }
+        /*    }
         } catch(err) {
             echo err.getMessage()
             echo "Input aborted"
-        }
+        }*/
 
         /*checkout scm: [
                         $class: 'GitSCM',
