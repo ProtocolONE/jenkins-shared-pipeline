@@ -86,7 +86,7 @@ def call(project, registry, devBranch = "", devNameSpace = "",ingressPrefix="dev
         }
         
         failure {
-            slackSend (color: '#FF0000', message: "FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+            slackSend (color: '#FF0000', message: "FAILED: Job '${env.JOB_NAME} branch: ${env.BRANCH_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
         }
     }
   }
