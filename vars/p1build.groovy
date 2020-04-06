@@ -41,7 +41,7 @@ def call() {
                         else
                             echo "REGISTRY_IMAGE: ${registryImage}"
                             docker build -t ${registryImage}:${BR_NAME}-$BUILD_ID -t ${registryImage}:${BR_NAME} .
-                            (if [ -f Dockerfile.nginx ]; then docker build -t ${registryImage}:${BR_NAME}-$BUILD_ID-static -f Dockerfile.nginx . ; else echo "Project without static content"; fi);
+                            (if [ -f Dockerfile.nginx ]; then docker build -t ${registryImage}:${BR_NAME}-$BUILD_ID-static -t ${registryImage}:${BR_NAME}-static -f Dockerfile.nginx . ; else echo "Project without static content"; fi);
                         fi
                     
                     """
@@ -65,7 +65,7 @@ def call() {
                             #then
                                 docker push ${registryImage}:${BR_NAME}
                             #fi
-                            (if [ -f Dockerfile.nginx ]; then docker push ${registryImage}:${BR_NAME}-$BUILD_ID-static ; else echo "Project without static content"; fi);
+                            (if [ -f Dockerfile.nginx ]; then docker push ${registryImage}:${BR_NAME}-$BUILD_ID-static && docker push ${registryImage}:${BR_NAME}-static; else echo "Project without static content"; fi);
                         """
                     }
                 }
