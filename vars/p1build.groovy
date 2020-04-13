@@ -31,6 +31,11 @@ def call() {
                         registryImage=env.CI_REGISTRY_IMAGE+"-qilin"
                     }
 
+                    if(params.BUILD_WITHOUT_CACHE){
+                        skipcache = "--no-cache"
+                    } else {
+                        skipcache = ""
+                    }
 
                     sh """
                         if [[ -f Makefile && ! -f Dockerfile ]]
@@ -40,7 +45,7 @@ def call() {
                             GOPATH=/go DIND=1 TAG=${BR_NAME} DIND_UID=$JENKINS_UID DIND_GUID=$JENKINS_GID make docker-image-jenkins
                         else
                             echo "REGISTRY_IMAGE: ${registryImage}"
-                            docker build -t ${registryImage}:${BR_NAME}-$BUILD_ID -t ${registryImage}:${BR_NAME} .
+                            docker build ${skipcache} -t ${registryImage}:${BR_NAME}-$BUILD_ID -t ${registryImage}:${BR_NAME} .
                             (if [ -f Dockerfile.nginx ]; then docker build -t ${registryImage}:${BR_NAME}-$BUILD_ID-static -t ${registryImage}:${BR_NAME}-static -f Dockerfile.nginx . ; else echo "Project without static content"; fi);
                         fi
                     
