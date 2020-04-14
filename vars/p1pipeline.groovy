@@ -13,16 +13,18 @@ def call(project, registry, devBranch = "", devNameSpace = "",ingressPrefix="dev
         P1_PROJECT = "${project}"
         BRANCH_TO_BUILD_DEFAULT = 'develop'
         BRANCH_TO_BUILD_REQUESTED = "${params.BRANCH_TO_BUILD}"
+        TAG_TO_BUILD_REQUESTED = "${params.TAG_TO_BUILD}"
     }
 
     agent any
 
     parameters {
-        booleanParam(name: 'PROD_RELEASE', defaultValue: false, description: 'Release to production')
         booleanParam(name: 'BUILD_WITHOUT_CACHE', defaultValue: false, description: 'Skip cached docker layers?')
         booleanParam(name: 'ROLLBACK', defaultValue: false, description: 'Rollback project?')
         booleanParam(name: 'CUSTOM_BUILD', defaultValue: false, description: 'Want to choose a custom branch?')
         string(name: 'BRANCH_TO_BUILD', defaultValue: "develop", description: 'GIT branch to build')
+        booleanParam(name: 'PROD_RELEASE', defaultValue: false, description: 'Release to production? Please provide tag below')
+        string(name: 'TAG_TO_BUILD', defaultValue: "v1.0", description: 'GIT tag to build')
     }    
     stages {
             stage('Rollback') {

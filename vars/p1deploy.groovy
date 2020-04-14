@@ -3,11 +3,6 @@ def call(devBranch = "", devNameSpace = "",ingressPrefix="dev-") {
 
     script {
         withCredentials([string(credentialsId: 'K8S_CI_TOKEN', variable: 'K8S_CI_TOKEN')]) {
-            if(params.PROD_RELEASE){
-                sh ''' echo "production release"'''              
-            } else {
-                sh ''' echo "test release"'''
-            }
             devBranch=devBranch.replaceAll("/","-").replaceAll("_","-").replaceAll("#","").toLowerCase()
             
             helmRelease = env.P1_PROJECT
@@ -16,6 +11,12 @@ def call(devBranch = "", devNameSpace = "",ingressPrefix="dev-") {
             BR_NAME=env.BRANCH_NAME
             BR_NAME=BR_NAME.replaceAll("/","-").replaceAll("_","-").replaceAll("#","").toLowerCase()
             helmDebug="--debug"
+
+            if(params.PROD_RELEASE){
+                sh ''' echo "production release"'''              
+                k8sNameSpace="prod"
+                helmRelease="${env.P1_PROJECT}-prod"
+            }
 
             sh "echo job_name: ${JOB_NAME}"
 
