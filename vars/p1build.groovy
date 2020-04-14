@@ -44,19 +44,22 @@ def call() {
                         skipcache = ""
                     }
 
-                    sh """
-                        if [[ -f Makefile && ! -f Dockerfile ]]
-                        then
-                            GOPATH=/go DIND=1 TAG=${BR_NAME}-$BUILD_ID DIND_UID=$JENKINS_UID DIND_GUID=$JENKINS_GID make build-jenkins
-                            GOPATH=/go DIND=1 TAG=${BR_NAME}-$BUILD_ID DIND_UID=$JENKINS_UID DIND_GUID=$JENKINS_GID make docker-image-jenkins
-                            GOPATH=/go DIND=1 TAG=${BR_NAME} DIND_UID=$JENKINS_UID DIND_GUID=$JENKINS_GID make docker-image-jenkins
-                        else
-                            echo "REGISTRY_IMAGE: ${registryImage}"
-                            docker build ${skipcache} -t ${registryImage}:${BR_NAME}-$BUILD_ID -t ${registryImage}:${BR_NAME} .
-                            (if [ -f Dockerfile.nginx ]; then docker build -t ${registryImage}:${BR_NAME}-$BUILD_ID-static -t ${registryImage}:${BR_NAME}-static -f Dockerfile.nginx . ; else echo "Project without static content"; fi);
-                        fi
-                    
-                    """
+                    withCredentials([string(credentialsId: 'GITHUB_TOKEN', variable: 'TOKEN')]) {
+
+                        sh """
+                            if [[ -f Makefile && ! -f Dockerfile ]]
+                            then
+                                GOPATH=/go DIND=1 TAG=${BR_NAME}-$BUILD_ID DIND_UID=$JENKINS_UID DIND_GUID=$JENKINS_GID make build-jenkins
+                                GOPATH=/go DIND=1 TAG=${BR_NAME}-$BUILD_ID DIND_UID=$JENKINS_UID DIND_GUID=$JENKINS_GID make docker-image-jenkins
+                                GOPATH=/go DIND=1 TAG=${BR_NAME} DIND_UID=$JENKINS_UID DIND_GUID=$JENKINS_GID make docker-image-jenkins
+                            else
+                                echo "REGISTRY_IMAGE: ${registryImage}"
+                                docker build ${skipcache} --build-arg TOKEN -t ${registryImage}:${BR_NAME}-$BUILD_ID -t ${registryImage}:${BR_NAME} .
+                                (if [ -f Dockerfile.nginx ]; then docker build -t ${registryImage}:${BR_NAME}-$BUILD_ID-static -t ${registryImage}:${BR_NAME}-static -f Dockerfile.nginx . ; else echo "Project without static content"; fi);
+                            fi
+                        
+                        """
+                    }
                 }
     echo "Pushing image"
         script {
