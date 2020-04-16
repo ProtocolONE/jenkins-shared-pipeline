@@ -88,7 +88,7 @@ def call(project, registry, devBranch = "", devNameSpace = "",ingressPrefix="dev
                 }
                 steps {
                     script {
-                        p1deploy-prod(devBranch, devNameSpace, ingressPrefix)
+                        p1deploy-prod()
                     }
                 }
             }
