@@ -71,13 +71,24 @@ def call(project, registry, devBranch = "", devNameSpace = "",ingressPrefix="dev
                 }
             }
 
-            stage('Staging Deployment') {
+            stage('Tst Deployment') {
                 when {
-                    expression {params.ROLLBACK == false}
+                    expression {params.ROLLBACK == false && params.PROD_RELEASE == false}
                 }
                 steps {
                     script {
                         p1deploy(devBranch, devNameSpace, ingressPrefix)
+                    }
+                }
+            }
+
+            stage('Prod Deployment') {
+                when {
+                    expression {params.ROLLBACK == false && params.PROD_RELEASE == true}
+                }
+                steps {
+                    script {
+                        p1deploy-prod(devBranch, devNameSpace, ingressPrefix)
                     }
                 }
             }
