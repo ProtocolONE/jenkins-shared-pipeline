@@ -5,6 +5,7 @@ def call() {
         withCredentials([string(credentialsId: 'K8S_CI_TOKEN', variable: 'K8S_CI_TOKEN')]) {
             
             k8sNameSpace="prod"
+            k8sIngressPrefix=""
             helmRelease="${env.P1_PROJECT}-prod"            
             BR_NAME=env.BRANCH_NAME
             BR_NAME=BR_NAME.replaceAll("/","-").replaceAll("_","-").replaceAll("#","").toLowerCase()
@@ -47,6 +48,7 @@ def call() {
                 helm upgrade --install ${helmRelease} .helm \
                 ${helmDebug} \
                 --namespace=${k8sNameSpace} \
+                --set ingress.hostnamePrefix=${k8sIngressPrefix} \
                 --set ingress.hostname=${prodHostname} \
                 --set backend.image=${registryImage} \
                 --set backend.imageTag=${BR_NAME}-${env.BUILD_ID} \
