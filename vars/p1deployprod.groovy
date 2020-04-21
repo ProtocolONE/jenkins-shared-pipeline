@@ -14,7 +14,7 @@ def call() {
 
             sh "echo branch: ${BR_NAME} helm release: ${helmRelease}"
 
-            def prodHostname = sh (returnStdout: true, script: "grep prodHostname .helm/values.yaml | awk '{print \$2}'")
+            def prodHostname = sh (returnStdout: true, script: "grep prodHostname .helm/values.yaml | awk '{print \$2}' | tr -d '\r\n'")
 
             registryImage = env.CI_REGISTRY_IMAGE
 
