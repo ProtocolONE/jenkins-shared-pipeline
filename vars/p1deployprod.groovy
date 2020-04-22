@@ -19,7 +19,7 @@ def call() {
 
             registryImage = env.CI_REGISTRY_IMAGE
 
-            if(env.BRANCH_NAME.startsWith("demo"){
+            if(env.BRANCH_NAME.startsWith("demo")){
                 k8sIngressPrefix="demo-"
                 helmRelease=helmRelease+"-demo"
             }
