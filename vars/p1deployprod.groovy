@@ -19,6 +19,11 @@ def call() {
 
             registryImage = env.CI_REGISTRY_IMAGE
 
+            if(env.BRANCH_NAME.startsWith("demo"){
+                k8sIngressPrefix="demo-"
+                helmRelease=helmRelease+"-demo"
+            }
+
             if(env.JOB_NAME.indexOf("qilin/auth1.protocol.one")!=-1){
                 //k8sIngressPrefix="qilin-"+k8sIngressPrefix
                 //helmRelease="qilin-"+helmRelease
