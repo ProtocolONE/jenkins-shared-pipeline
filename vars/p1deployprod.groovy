@@ -20,6 +20,7 @@ def call() {
             registryImage = env.CI_REGISTRY_IMAGE
 
             if(env.BRANCH_NAME.startsWith("demo")){
+                prodHostname="api."+prodHostname
                 k8sIngressPrefix="demo-"
                 helmRelease=helmRelease+"-demo"
             }
