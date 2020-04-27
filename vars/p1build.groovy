@@ -3,19 +3,7 @@ def call() {
         script {
                     if(params.STG_RELEASE){
                         sh ''' echo "stage release"'''
-                            if(params.TAG_TO_BUILD != null){
-                                env.BRANCH_NAME=TAG_TO_BUILD_REQUESTED
-
-                                checkout scm: [
-                                    $class: 'GitSCM',
-                                    branches: [[name: "refs/tags/${BRANCH_NAME}"]],
-                                    userRemoteConfigs: [
-                                        [url: env.GIT_URL,
-                                        refspec: "+refs/tags/${BRANCH_NAME}",
-                                        credentialsId: 'p1release']
-                                    ]
-                                ]
-                            } else {
+                            if(params.TAG_TO_BUILD.isEmpty()){
                                 env.BRANCH_NAME=BRANCH_TO_BUILD_REQUESTED 
                                 
                                 checkout scm: [
@@ -24,6 +12,18 @@ def call() {
                                     userRemoteConfigs: [
                                         [url: env.GIT_URL,
                                         refspec: "+refs/heads/${BRANCH_NAME}:refs/remotes/origin/${BRANCH_NAME}",
+                                        credentialsId: 'p1release']
+                                    ]
+                                ]
+                            } else {
+                                env.BRANCH_NAME=TAG_TO_BUILD_REQUESTED
+
+                                checkout scm: [
+                                    $class: 'GitSCM',
+                                    branches: [[name: "refs/tags/${BRANCH_NAME}"]],
+                                    userRemoteConfigs: [
+                                        [url: env.GIT_URL,
+                                        refspec: "+refs/tags/${BRANCH_NAME}",
                                         credentialsId: 'p1release']
                                     ]
                                 ]
