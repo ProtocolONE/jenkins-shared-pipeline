@@ -24,7 +24,7 @@ def call(project, registry, devBranch = "", devNameSpace = "",ingressPrefix="dev
         booleanParam(name: 'CUSTOM_BUILD', defaultValue: false, description: 'Want to choose a custom branch?')
         string(name: 'BRANCH_TO_BUILD', defaultValue: "develop", description: 'GIT branch to build')
         booleanParam(name: 'STG_RELEASE', defaultValue: false, description: 'Release to stg? Please provide BRANCH_TO_BUILD or TAG_TO_BUILD')
-        string(name: 'TAG_TO_BUILD', defaultValue: "v1.0", description: 'GIT tag to build')
+        string(name: 'TAG_TO_BUILD', defaultValue: "", description: 'GIT tag to build')
         booleanParam(name: 'PROD_RELEASE', defaultValue: false, description: 'Release to production? Please provide TAG_TO_BUILD')
     }    
     stages {
