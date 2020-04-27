@@ -23,8 +23,9 @@ def call(project, registry, devBranch = "", devNameSpace = "",ingressPrefix="dev
         booleanParam(name: 'ROLLBACK', defaultValue: false, description: 'Rollback project?')
         booleanParam(name: 'CUSTOM_BUILD', defaultValue: false, description: 'Want to choose a custom branch?')
         string(name: 'BRANCH_TO_BUILD', defaultValue: "develop", description: 'GIT branch to build')
-        booleanParam(name: 'PROD_RELEASE', defaultValue: false, description: 'Release to production? Please provide tag below')
+        booleanParam(name: 'STG_RELEASE', defaultValue: false, description: 'Release to stg? Please provide BRANCH_TO_BUILD or TAG_TO_BUILD')
         string(name: 'TAG_TO_BUILD', defaultValue: "v1.0", description: 'GIT tag to build')
+        booleanParam(name: 'PROD_RELEASE', defaultValue: false, description: 'Release to production? Please provide TAG_TO_BUILD')
     }    
     stages {
             stage('Rollback') {
@@ -73,11 +74,22 @@ def call(project, registry, devBranch = "", devNameSpace = "",ingressPrefix="dev
 
             stage('Tst Deployment') {
                 when {
-                    expression {params.ROLLBACK == false && params.PROD_RELEASE == false}
+                    expression {params.ROLLBACK == false && params.PROD_RELEASE == false && params.STG_RELEASE == false}
                 }
                 steps {
                     script {
                         p1deploy(devBranch, devNameSpace, ingressPrefix)
+                    }
+                }
+            }
+
+            stage('Stg Deployment') {
+                when {
+                    expression {params.ROLLBACK == false && params.STG_RELEASE == true}
+                }
+                steps {
+                    script {
+                        p1deploystg()
                     }
                 }
             }
