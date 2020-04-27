@@ -3,7 +3,7 @@ def call() {
         script {
                     if(params.STG_RELEASE){
                         sh ''' echo "stage release"'''
-                            if(params.TAG_TO_BUILD_REQUESTED != null){
+                            if(params.TAG_TO_BUILD != null){
                                 env.BRANCH_NAME=TAG_TO_BUILD_REQUESTED
 
                                 checkout scm: [
