@@ -24,6 +24,10 @@ QUEUE_POLL_INTERVAL = 2
 JOB_POLL_INTERVAL = 5
 OVERALL_TIMEOUT = 3600 # 1 hour
 
+# by default deploy to tst environment and 
+DEPLOY_TO_ENV = os.environ.get('DEPLOY_TO_ENV') or 'tst'
+IS_RB = os.environ.get('IS_RB') or 'false'
+
 # job specifics: should be passed in
 jenkins_uri = os.environ.get('JENKINS_URI') or 'jenkins.protocol.one'
 job_name = 'jobrunner'
@@ -32,7 +36,7 @@ build_token = urllib.parse.quote(os.environ['JENKINS_BUILD_TOKEN'])
 build_project = urllib.parse.quote(os.environ['JENKINS_BUILD_PROJECT'], safe='/')
 build_branch = urllib.parse.quote(os.environ['JENKINS_BUILD_BRANCH'], safe='')
 
-post_payload = {'PROJECT': build_project, 'BRANCH': build_branch}
+post_payload = {'PROJECT': build_project, 'BRANCH': build_branch, 'DEPLOY_TO_ENV' : DEPLOY_TO_ENV, 'IS_RB': IS_RB }
 
 # start the build
 #
