@@ -15,8 +15,16 @@ def call() {
 
             sh "echo branch: ${BR_NAME} helm release: ${helmRelease}"
 
-            def stgHostname = sh (returnStdout: true, script: "grep stgHostname .helm/values.yaml | awk '{print \$2}' | tr -d '\r\n'")
-
+            def stgHostname = sh (returnStdout: true, script: 
+            """
+                if [[ -f Makefile && ! -f Dockerfile ]]
+                    then
+                        grep stgHostname deployments/helm/values.yaml | awk '{print \$2}' | tr -d '\r\n'
+                    else
+                        grep stgHostname .helm/values.yaml | awk '{print \$2}' | tr -d '\r\n'
+                    fi
+            """
+            )
             registryImage = env.CI_REGISTRY_IMAGE
 
             if(env.JOB_NAME.indexOf("qilin/auth1.protocol.one")!=-1){
