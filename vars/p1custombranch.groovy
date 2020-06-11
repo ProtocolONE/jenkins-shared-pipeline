@@ -9,8 +9,8 @@ def call() {
                             defaultValue: BRANCH_TO_BUILD_DEFAULT, 
                             description: 'Branch name', name: 'Enter branch name (or leave default) and press [Proceed]:']
                     ])*/
-                    echo ("User has entered the branch name: " + BRANCH_TO_BUILD_REQUESTED)
-                    env.BRANCH_NAME=BRANCH_TO_BUILD_REQUESTED
+                    echo ("User has entered the branch name: " + URLDecoder.decode((BRANCH_TO_BUILD_REQUESTED))
+                    env.BRANCH_NAME=URLDecoder.decode(BRANCH_TO_BUILD_REQUESTED)
         /*    }
         } catch(err) {
             echo err.getMessage()

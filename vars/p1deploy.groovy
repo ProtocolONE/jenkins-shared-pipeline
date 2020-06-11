@@ -8,7 +8,7 @@ def call(devBranch = "", devNameSpace = "",ingressPrefix="dev-") {
             helmRelease = env.P1_PROJECT
             k8sNameSpace="default"
             k8sIngressPrefix=""
-            BR_NAME=env.BRANCH_NAME
+            BR_NAME=URLDecoder.decode(env.BRANCH_NAME)
             BR_NAME=BR_NAME.replaceAll("/","-").replaceAll("_","-").replaceAll("#","").toLowerCase()
             helmDebug="--debug"
 

@@ -4,7 +4,7 @@ def call() {
                     if(params.STG_RELEASE){
                         sh ''' echo "stage release"'''
                             if(params.TAG_TO_BUILD.isEmpty()){
-                                env.BRANCH_NAME=BRANCH_TO_BUILD_REQUESTED 
+                                env.BRANCH_NAME=URLDecoder.decode(BRANCH_TO_BUILD_REQUESTED)
                                 
                                 checkout scm: [
                                     $class: 'GitSCM',
@@ -16,7 +16,7 @@ def call() {
                                     ]
                                 ]
                             } else {
-                                env.BRANCH_NAME=TAG_TO_BUILD_REQUESTED
+                                env.BRANCH_NAME=URLDecoder.decode(TAG_TO_BUILD_REQUESTED)
 
                                 checkout scm: [
                                     $class: 'GitSCM',
@@ -30,7 +30,7 @@ def call() {
                             }
                     } else if(params.PROD_RELEASE){
                         sh ''' echo "production release"'''              
-                        env.BRANCH_NAME=TAG_TO_BUILD_REQUESTED
+                        env.BRANCH_NAME=URLDecoder.decode(TAG_TO_BUILD_REQUESTED)
 
                         checkout scm: [
                             $class: 'GitSCM',
@@ -54,7 +54,7 @@ def call() {
                         ]
                     }
                     
-                    BR_NAME=env.BRANCH_NAME
+                    BR_NAME=URLDecoder.decode(env.BRANCH_NAME)
                     BR_NAME=BR_NAME.replaceAll("/","-").replaceAll("_","-").replaceAll("#","").toLowerCase()
 
                     JENKINS_UID=sh(script: 'id -u', , returnStdout: true).trim()
@@ -90,7 +90,7 @@ def call() {
                 }
     echo "Pushing image"
         script {
-                    BR_NAME=env.BRANCH_NAME
+                    BR_NAME=URLDecoder.decode(env.BRANCH_NAME)
                     BR_NAME=BR_NAME.replaceAll("/","-").replaceAll("_","-").replaceAll("#","").toLowerCase()
                     withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'p1docker',
                         usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD']]) 
