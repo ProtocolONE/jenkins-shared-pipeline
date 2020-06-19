@@ -7,5 +7,5 @@ def call() {
         registryImage=env.CI_REGISTRY_IMAGE+"-qilin"
     }
 
-    aquaMicroscanner imageName: "${registryImage}:${BR_NAME}-$BUILD_ID", notCompliesCmd: '', onDisallowed: 'ignore', outputFormat: 'html'
+    //aquaMicroscanner imageName: "${registryImage}:${BR_NAME}-$BUILD_ID", notCompliesCmd: '', onDisallowed: 'ignore', outputFormat: 'html'
 }
