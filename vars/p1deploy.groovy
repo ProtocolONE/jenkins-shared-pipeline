@@ -59,6 +59,7 @@ def call(devBranch = "", devNameSpace = "",ingressPrefix="dev-") {
                 helm init --client-only &&
                 helm upgrade --install ${helmRelease} .helm \
                 ${helmDebug} \
+                --force \
                 --namespace=${k8sNameSpace} \
                 --set ingress.hostnamePrefix=${k8sIngressPrefix} \
                 --set backend.image=${registryImage} \
