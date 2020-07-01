@@ -50,7 +50,7 @@ def call(devBranch = "", devNameSpace = "",ingressPrefix="dev-") {
                 -e "CI_REGISTRY_IMAGE=\$CI_REGISTRY_IMAGE" \
                 -e "BUILD_ID=\$BUILD_ID" \
                 -e NGX_IMAGE=`if [ -f Dockerfile.nginx ]; then echo \$CI_REGISTRY_IMAGE ; else echo nginx; fi` \
-                p1hub/kubernetes-helm:2.11.0 \
+                p1hub/kubernetes-helm:latest \
                 /bin/sh -c \
                 'kubectl config set-cluster k8s --insecure-skip-tls-verify=true --server=\$K8S_API_URL &&
                 kubectl config set-credentials ci --token=\$K8S_CI_TOKEN &&
