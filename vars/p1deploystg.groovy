@@ -21,7 +21,7 @@ def call() {
                     then
                         grep stgHostname deployments/helm/values.yaml | awk '{print \$2}' | tr -d '\r\n'
                     else
-                        grep stgHostname .helm/values.yaml | awk '{print \$2}' | tr -d '\r\n'
+                         grep stgHostname .helm/values.yaml || grep stgHostname deployments/helm/values.yaml | awk '{print \$2}' | tr -d '\r\n'
                     fi
             """
             )
