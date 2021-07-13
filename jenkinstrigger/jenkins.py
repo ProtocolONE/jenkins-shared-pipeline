@@ -44,7 +44,8 @@ start_build_url = 'https://{}/generic-webhook-trigger/invoke?token={}'.format(je
 r = requests.post(start_build_url, data=json.dumps(post_payload))
 print(r.text)
 
-queue_id =  r.json()['data']['triggerResults']['jobrunner']['id']
+#queue_id =  r.json()['data']['triggerResults']['jobrunner']['id']
+queue_id =  r.json()['jobs']['jobrunner']['id']
 
 job_info_url = 'https://{}@{}/queue/item/{}/api/json'.format(auth_token, jenkins_uri, queue_id)
 elasped_time = 0 
