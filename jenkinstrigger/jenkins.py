@@ -50,6 +50,7 @@ queue_id =  r.json()['jobs']['jobrunner']['id']
 job_info_url = 'https://{}@{}/queue/item/{}/api/json'.format(auth_token, jenkins_uri, queue_id)
 elasped_time = 0 
 print('{} Job {} added to queue'.format(time.ctime(), job_name))
+time.sleep(3)
 while True:
     print("{}: trying to get job id...".format(time.ctime()))
     try:
