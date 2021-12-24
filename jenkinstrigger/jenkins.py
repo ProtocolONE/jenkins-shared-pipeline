@@ -68,6 +68,8 @@ while True:
 
 print("{}: Job started: https://{}/job/{}/{}/console".format(time.ctime(),jenkins_uri, job_name, job_id))
 
+time.sleep(3)
+
 # poll job status waiting for a result
 #
 job_url = 'https://{}@{}/job/{}/{}/api/json'.format(auth_token, jenkins_uri, job_name, job_id)
