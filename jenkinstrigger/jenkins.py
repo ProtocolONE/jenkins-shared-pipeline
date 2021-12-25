@@ -55,6 +55,7 @@ while True:
     print("{}: trying to get job id...".format(time.ctime()))
     try:
         l = requests.get(job_info_url,timeout=5)
+        print(l)
         jqe = l.json()
         task = jqe['task']['name']
         job_id = jqe['executable']['number']
